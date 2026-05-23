@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/instabug/main/json-schema/instabug-crash-schema.json",
+  "title": "Luciq Crash",
+  "description": "A grouped crash entity surfaced by the Luciq MCP Server. Groups together individual crash occurrences (see Occurrence) by similarity, with frequency, affected-user, severity, and root-cause hints.",
+  "type": "object",
+  "required": ["number", "title"],
+  "properties": {
+    "number": { "type": "integer", "description": "Per-application crash number." },
+    "title": { "type": "string" },
+    "first_seen": { "type": "string", "format": "date-time" },
+    "last_seen": { "type": "string", "format": "date-time" },
+    "occurrence_count": { "type": "integer", "minimum": 0 },
+    "affected_users": { "type": "integer", "minimum": 0 },
+    "status": {
+      "type": "string",
+      "enum": ["new", "in-progress", "resolved", "ignored"]
+    },
+    "severity": { "type": "string" },
+    "cause": { "type": "string" },
+    "app_version": { "type": "string" },
+    "os_version": { "type": "string" },
+    "device": { "type": "string" },
+    "current_view": { "type": "string" }
+  }
+}

@@ -1,0 +1,62 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Luciq (formerly Instabug)
+providerId: instabug
+created: '2026-05-23'
+modified: '2026-05-23'
+reconciled: true
+tags:
+  - Mobile Observability
+  - Rate Limiting
+  - SDK Ingest
+description: >-
+  Luciq publishes per-app/minute ingest rate limits in its July 2025 License Entitlements
+  and Restrictions document. These are SDK-side ingest ceilings for crash, ANR, non-fatal,
+  hang, general event, and session-replay traffic. Public MCP Server and Webhook rate
+  limits are not separately published; the Enterprise App Health Metrics Export API is
+  gated and access is provisioned per customer.
+sources:
+  - https://docs.luciq.ai/organization-settings/billing/license-entitlements-and-restrictions/july-2025-license-entitlements-and-restrictions
+  - https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook
+headers: {}
+responseCodes:
+  throttled: 429
+limits:
+  - name: Crashes ingest
+    scope: app
+    metric: requests_per_minute
+    limit: 2000-3000
+    timeFrame: minute
+    notes: Range covers crash, ANR, non-fatal, and hang ingest.
+  - name: ANR ingest
+    scope: app
+    metric: requests_per_minute
+    limit: 2000-3000
+    timeFrame: minute
+  - name: Non-Fatal ingest
+    scope: app
+    metric: requests_per_minute
+    limit: 2000-3000
+    timeFrame: minute
+  - name: App Hangs ingest
+    scope: app
+    metric: requests_per_minute
+    limit: 2000-3000
+    timeFrame: minute
+  - name: General non-critical events ingest
+    scope: app
+    metric: requests_per_minute
+    limit: 30000
+    timeFrame: minute
+  - name: Session Replay ingest
+    scope: app
+    metric: requests_per_minute
+    limit: 6000
+    timeFrame: minute
+  - name: Session entitlement
+    scope: dau
+    metric: sessions_per_month
+    limit: 180
+    timeFrame: month
+    notes: 180 sessions/month per 1 Daily Active User.

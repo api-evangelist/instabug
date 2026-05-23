@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/instabug/main/json-schema/instabug-application-schema.json",
+  "title": "Luciq Application",
+  "description": "A mobile application registered with Luciq. Returned by list_applications and used as the slug for every other crash, hang, bug, and review query.",
+  "type": "object",
+  "required": ["slug", "name", "platform"],
+  "properties": {
+    "slug": { "type": "string", "description": "Stable identifier for the application; used as the {slug} path parameter." },
+    "name": { "type": "string" },
+    "platform": {
+      "type": "string",
+      "enum": ["ios", "android", "react_native", "flutter"]
+    },
+    "token": { "type": "string", "description": "Application token used to query reviews." }
+  }
+}

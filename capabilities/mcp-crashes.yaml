@@ -1,0 +1,191 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Luciq MCP Server — Crashes
+  description: 'Luciq MCP Server — Crashes. 3 operations. Lead operation: List Crashes. Self-contained
+    Naftiko capability covering crash group inspection: listing crash groups, fetching a single crash
+    detail, and aggregating crash occurrences by pivot key.'
+  tags:
+  - Luciq
+  - Crashes
+  - MCP
+  - Mobile Observability
+  created: '2026-05-23'
+  modified: '2026-05-23'
+binds:
+- namespace: env
+  keys:
+    LUCIQ_MCP_TOKEN: LUCIQ_MCP_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: mcp-crashes
+    baseUri: https://api.luciq.ai/api/mcp
+    description: Luciq MCP Server Crashes surface. Self-contained, no shared references.
+    resources:
+    - name: applications-slug-crashes
+      path: /applications/{slug}/crashes
+      operations:
+      - name: listcrashes
+        method: GET
+        description: List Crashes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: date_ms
+          in: query
+          type: integer
+          description: Lower bound timestamp in milliseconds since epoch.
+        - name: status_id
+          in: query
+          type: string
+        - name: devices
+          in: query
+          type: array
+        - name: os_versions
+          in: query
+          type: array
+        - name: app_versions
+          in: query
+          type: array
+        - name: current_views
+          in: query
+          type: array
+        - name: teams
+          in: query
+          type: array
+        - name: platform
+          in: query
+          type: string
+    - name: applications-slug-crashes-number
+      path: /applications/{slug}/crashes/{number}
+      operations:
+      - name: getcrashdetails
+        method: GET
+        description: Get Crash Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: applications-slug-crashes-number-patterns
+      path: /applications/{slug}/crashes/{number}/patterns
+      operations:
+      - name: getcrashpatterns
+        method: GET
+        description: Get Crash Patterns
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: pattern_key
+          in: query
+          type: string
+          description: One of devices, oses, app_versions, current_views, app_status, experiments.
+          required: true
+    authentication:
+      type: bearer
+      key: Authorization
+      value: 'Bearer {{env.LUCIQ_MCP_TOKEN}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: mcp-crashes-rest
+    port: 8080
+    description: REST adapter for Luciq MCP Server — Crashes.
+    resources:
+    - path: /v1/applications/{slug}/crashes
+      name: applications-slug-crashes
+      description: REST surface for crash groups.
+      operations:
+      - method: GET
+        name: listcrashes
+        description: List Crashes
+        call: mcp-crashes.listcrashes
+        with:
+          date_ms: rest.date_ms
+          status_id: rest.status_id
+          devices: rest.devices
+          os_versions: rest.os_versions
+          app_versions: rest.app_versions
+          current_views: rest.current_views
+          teams: rest.teams
+          platform: rest.platform
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{slug}/crashes/{number}
+      name: applications-slug-crashes-number
+      description: REST surface for a single crash group.
+      operations:
+      - method: GET
+        name: getcrashdetails
+        description: Get Crash Details
+        call: mcp-crashes.getcrashdetails
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{slug}/crashes/{number}/patterns
+      name: applications-slug-crashes-number-patterns
+      description: REST surface for crash occurrence patterns.
+      operations:
+      - method: GET
+        name: getcrashpatterns
+        description: Get Crash Patterns
+        call: mcp-crashes.getcrashpatterns
+        with:
+          pattern_key: rest.pattern_key
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: mcp-crashes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Luciq MCP Server — Crashes.
+    tools:
+    - name: list-crashes
+      description: List Crashes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mcp-crashes.listcrashes
+      with:
+        date_ms: tools.date_ms
+        status_id: tools.status_id
+        devices: tools.devices
+        os_versions: tools.os_versions
+        app_versions: tools.app_versions
+        current_views: tools.current_views
+        teams: tools.teams
+        platform: tools.platform
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-crash-details
+      description: Get Crash Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mcp-crashes.getcrashdetails
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-crash-patterns
+      description: Get Crash Patterns
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mcp-crashes.getcrashpatterns
+      with:
+        pattern_key: tools.pattern_key
+      outputParameters:
+      - type: object
+        mapping: $.

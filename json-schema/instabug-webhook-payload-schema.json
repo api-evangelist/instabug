@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/instabug/main/json-schema/instabug-webhook-payload-schema.json",
+  "title": "Luciq Webhook Payload",
+  "description": "Discriminated union of the three Luciq outbound webhook payload shapes: bug reports, crash reports, and APM event alerts. Each delivery is HMAC-SHA256 signed via the x-ibg-signature-256 header using the secret bound to the webhook at configuration time.",
+  "oneOf": [
+    { "$ref": "#/$defs/BugPayload" },
+    { "$ref": "#/$defs/CrashPayload" },
+    { "$ref": "#/$defs/APMEventPayload" }
+  ],
+  "$defs": {
+    "BugPayload": {
+      "type": "object",
+      "required": ["title", "reported_at"],
+      "properties": {
+        "title": { "type": "string" },
+        "reported_at": { "type": "string", "format": "date-time" },
+        "email": { "type": "string", "format": "email" },
+        "private_url": { "type": "string", "format": "uri" },
+        "categories": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "device": { "type": "string" },
+        "user_steps": { "type": "array", "items": { "type": "object" } },
+        "console_log": { "type": "string" },
+        "attachments": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "CrashPayload": {
+      "type": "object",
+      "required": ["exception", "number", "url"],
+      "properties": {
+        "exception": { "type": "string" },
+        "number": { "type": "integer" },
+        "url": { "type": "string", "format": "uri" },
+        "status": { "type": "string", "enum": ["new", "in-progress", "resolved", "ignored"] },
+        "device": { "type": "string" },
+        "memory_mb": { "type": "integer" },
+        "storage_mb": { "type": "integer" },
+        "battery_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "app_version": { "type": "string" },
+        "console_log": { "type": "string" },
+        "user_steps": { "type": "array", "items": { "type": "object" } },
+        "image_attachments": { "type": "array", "items": { "type": "string", "format": "uri" } }
+      }
+    },
+    "APMEventPayload": {
+      "type": "object",
+      "required": ["title", "metric", "application", "platform"],
+      "properties": {
+        "title": { "type": "string" },
+        "trace": { "type": "string" },
+        "trigger": { "type": "string" },
+        "current_value": { "type": "number" },
+        "metric": {
+          "type": "string",
+          "enum": ["network_failure_rate", "app_launch_time", "screen_loading_time", "ui_hang_rate", "flow_apdex"]
+        },
+        "application": { "type": "string" },
+        "platform": { "type": "string", "enum": ["ios", "android", "react_native", "flutter"] },
+        "url": { "type": "string", "format": "uri" }
+      }
+    }
+  }
+}

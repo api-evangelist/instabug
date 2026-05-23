@@ -1,0 +1,126 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Luciq MCP Server — Bugs
+  description: 'Luciq MCP Server — Bugs. 2 operations. Lead operation: List Bugs. Self-contained
+    Naftiko capability covering user-reported bugs submitted via the Luciq SDK: listing bugs with
+    status/priority/version filters and fetching full bug detail (logs, user data, device metadata)
+    for reproduction.'
+  tags:
+  - Luciq
+  - Bugs
+  - MCP
+  - User Feedback
+  created: '2026-05-23'
+  modified: '2026-05-23'
+binds:
+- namespace: env
+  keys:
+    LUCIQ_MCP_TOKEN: LUCIQ_MCP_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: mcp-bugs
+    baseUri: https://api.luciq.ai/api/mcp
+    description: Luciq MCP Server Bugs surface. Self-contained, no shared references.
+    resources:
+    - name: applications-slug-bugs
+      path: /applications/{slug}/bugs
+      operations:
+      - name: listbugs
+        method: GET
+        description: List Bugs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: One of new, in-progress, closed.
+        - name: priority
+          in: query
+          type: string
+          description: One of trivial, minor, major, critical, blocker.
+        - name: app_version
+          in: query
+          type: string
+    - name: applications-slug-bugs-number
+      path: /applications/{slug}/bugs/{number}
+      operations:
+      - name: getbugdetails
+        method: GET
+        description: Get Bug Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      key: Authorization
+      value: 'Bearer {{env.LUCIQ_MCP_TOKEN}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: mcp-bugs-rest
+    port: 8080
+    description: REST adapter for Luciq MCP Server — Bugs.
+    resources:
+    - path: /v1/applications/{slug}/bugs
+      name: applications-slug-bugs
+      description: REST surface for user-reported bugs.
+      operations:
+      - method: GET
+        name: listbugs
+        description: List Bugs
+        call: mcp-bugs.listbugs
+        with:
+          status: rest.status
+          priority: rest.priority
+          app_version: rest.app_version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{slug}/bugs/{number}
+      name: applications-slug-bugs-number
+      description: REST surface for a single bug.
+      operations:
+      - method: GET
+        name: getbugdetails
+        description: Get Bug Details
+        call: mcp-bugs.getbugdetails
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: mcp-bugs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Luciq MCP Server — Bugs.
+    tools:
+    - name: list-bugs
+      description: List Bugs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mcp-bugs.listbugs
+      with:
+        status: tools.status
+        priority: tools.priority
+        app_version: tools.app_version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bug-details
+      description: Get Bug Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mcp-bugs.getbugdetails
+      outputParameters:
+      - type: object
+        mapping: $.

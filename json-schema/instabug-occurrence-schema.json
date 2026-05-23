@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/instabug/main/json-schema/instabug-occurrence-schema.json",
+  "title": "Luciq Crash Occurrence",
+  "description": "A single instance of a crash captured on a specific device/session. Identified by a ULID and carries full environmental context: device, OS, memory/storage, app status, user identity, and a pointer to the underlying log payload.",
+  "type": "object",
+  "required": ["ulid"],
+  "properties": {
+    "ulid": { "type": "string", "description": "ULID identifying this specific occurrence." },
+    "crash_number": { "type": "integer" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "device": { "type": "string" },
+    "os": { "type": "string" },
+    "os_version": { "type": "string" },
+    "app_version": { "type": "string" },
+    "memory_mb": { "type": "integer", "minimum": 0 },
+    "storage_mb": { "type": "integer", "minimum": 0 },
+    "app_status": {
+      "type": "string",
+      "enum": ["foreground", "background"]
+    },
+    "user_id": { "type": "string" },
+    "log_url": { "type": "string", "format": "uri" }
+  }
+}

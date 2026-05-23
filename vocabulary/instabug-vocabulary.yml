@@ -1,0 +1,71 @@
+name: Luciq (Instabug) Domain Vocabulary
+provider: Luciq
+providerId: instabug
+description: Tag-derived vocabulary for the Luciq mobile observability surface. Sourced from
+  Luciq MCP Server tools, product guides, webhook integrations, and the rebranded Instabug
+  documentation tree at docs.luciq.ai.
+terms:
+- term: Application
+  description: A mobile app registered with Luciq, identified by a stable slug and an application
+    token; the root scoping primitive for every other entity.
+- term: Crash
+  description: A group of similar crash occurrences within an application. Carries occurrence
+    frequency, affected user count, severity, status, cause hints, and environmental scope.
+- term: Crash Pattern
+  description: Aggregation of crash occurrences by a pivot key — devices, OSes, app_versions,
+    current_views, app_status, or experiments — to reveal concentration.
+- term: Occurrence
+  description: A single instance of a crash captured on one device/session, identified by a ULID
+    and carrying full per-occurrence context (device, OS, memory, storage, app status, user,
+    log URL).
+- term: App Hang
+  description: A grouped UI freeze (non-fatal UI thread block) event for an application. Tracked
+    similar to crashes with duration, frequency, and scope.
+- term: Bug Report
+  description: A user-reported bug submitted through the Luciq SDK in-app reporter. Carries
+    reporter contact, categories/tags, environment, console log, user step breadcrumbs, and
+    attachments for reproduction.
+- term: Review
+  description: An app review captured through a store, native, or custom prompt and surfaced via
+    the Luciq MCP Server.
+- term: Session
+  description: A user app session. Entitlement is denominated at 180 sessions/month per 1 DAU.
+- term: Frustration-Free Session
+  description: A Luciq composite score measuring sessions free of crashes, hangs, and other
+    user-facing frustrations.
+- term: DAU (Daily Active User)
+  description: Luciq's primary billing dimension; pricing is "priced on DAU and Seats."
+- term: Detect Agent
+  description: AI agent that surfaces visual issues and broken functionality from session data.
+- term: Resolve Agent
+  description: AI agent that ties source code (via GitHub) to issues, runs the AI Debugging
+    Assistant, and proposes fixes.
+- term: Release Agent
+  description: AI agent that reviews PRs and manages release health.
+- term: MCP Tool
+  description: An agent-callable operation exposed by the Luciq MCP Server (10 read-only tools
+    covering applications, crashes, occurrences, hangs, bugs, reviews).
+- term: Webhook
+  description: An outbound HTTP POST delivery of a Bug, Crash, or APM event to a customer
+    callback URL, signed with HMAC-SHA256 via the x-ibg-signature-256 header.
+- term: SmartResolve
+  description: Luciq's automated remediation feature that combines root cause analysis with PR
+    generation against connected repositories.
+- term: One-Code App
+  description: Luciq's pattern for a single app binary that ships to multiple brands or
+    regions; tracked as logically distinct apps in the dashboard.
+- term: Flow
+  description: A user-defined APM trace that wraps a sequence of operations for end-to-end
+    performance measurement (Flows Apdex).
+- term: Repro Step
+  description: A breadcrumb captured by the SDK (taps, screen views, network calls) used to
+    reproduce bugs and crashes.
+- term: Symbolication
+  description: The process of mapping crash stack frames back to source symbol names; iOS
+    dSYM and Android mapping/deobfuscation upload flows.
+- term: SDK Token
+  description: The application-specific token embedded in the mobile SDK to identify which
+    Luciq app a payload belongs to.
+- term: Personal Access Token (PAT)
+  description: A long-lived MCP credential generated from the Luciq dashboard for CI and
+    automation use cases.

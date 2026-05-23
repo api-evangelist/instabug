@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/instabug/main/json-schema/instabug-bug-schema.json",
+  "title": "Luciq Bug Report",
+  "description": "A user-reported bug submitted through the Luciq SDK in-app reporter. Carries reporter contact, categorization, environment, console log, user step breadcrumbs, and attachments for reproduction.",
+  "type": "object",
+  "required": ["number", "title", "reported_at"],
+  "properties": {
+    "number": { "type": "integer" },
+    "title": { "type": "string" },
+    "reported_at": { "type": "string", "format": "date-time" },
+    "status": { "type": "string", "enum": ["new", "in-progress", "closed"] },
+    "priority": { "type": "string", "enum": ["trivial", "minor", "major", "critical", "blocker"] },
+    "email": { "type": "string", "format": "email" },
+    "app_version": { "type": "string" },
+    "device": { "type": "string" },
+    "categories": { "type": "array", "items": { "type": "string" } },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "user_steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "message": { "type": "string" },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "console_log": { "type": "string" },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "enum": ["image", "video", "file"] },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+extends:
+  - spectral:oas
+
+functions: []
+
+documentationUrl: https://docs.luciq.ai/
+
+rules:
+  # Servers must point at the Luciq production base.
+  luciq-server-url-required:
+    description: Every Luciq OpenAPI document must declare at least one server URL under the api.luciq.ai apex.
+    severity: error
+    given: $.servers
+    then:
+      - field: '[*].url'
+        function: pattern
+        functionOptions:
+          match: '^https://(api|build|api\.eu)\.luciq\.ai(/.*)?$'
+
+  # Operations must be tagged.
+  luciq-operation-tagged:
+    description: Every operation must have at least one tag aligned with the Luciq surface taxonomy.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].tags
+    then:
+      function: length
+      functionOptions:
+        min: 1
+
+  # Operation tags must be Title Case.
+  luciq-tags-title-case:
+    description: Top-level tags must use Title Case (e.g., "Crashes", "App Hangs", "Bugs").
+    severity: error
+    given: $.tags[*].name
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[A-Z][A-Za-z0-9]*( [A-Z][A-Za-z0-9]*)*$'
+
+  # Operation summaries must be Title Case.
+  luciq-summary-title-case:
+    description: Operation summaries must be Title Case (e.g., "List Crashes", "Get Bug Details").
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].summary
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[A-Z][A-Za-z0-9]*( [A-Z][A-Za-z0-9]*)*$'
+
+  # Every operation needs operationId in camelCase.
+  luciq-operation-id-camel:
+    description: operationId must be camelCase (e.g., listCrashes, getOccurrenceDetails).
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].operationId
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[a-z][a-zA-Z0-9]+$'
+
+  # Security must be declared at root or per-operation.
+  luciq-security-required:
+    description: Root-level security must declare at least one scheme (OAuth or PAT bearer).
+    severity: error
+    given: $.security
+    then:
+      function: length
+      functionOptions:
+        min: 1
+
+  # OAuth + PAT security schemes must both be present.
+  luciq-mcp-auth-schemes:
+    description: The Luciq MCP Server OpenAPI must define both oauth2 and personalAccessToken security schemes.
+    severity: warn
+    given: $.components.securitySchemes
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [oauth2, personalAccessToken]
+
+  # 401 response defined for protected endpoints.
+  luciq-401-defined:
+    description: Every operation must define a 401 response so clients can handle auth failures uniformly.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      field: '401'
+      function: truthy
+
+  # Path style: lowercase, hyphen-separated.
+  luciq-path-kebab-case:
+    description: URL path segments must be lowercase, hyphen-separated (e.g., /app-hangs, /occurrence-tokens).
+    severity: warn
+    given: $.paths
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        match: '^(/[a-z0-9\-{}\.]+)+$'

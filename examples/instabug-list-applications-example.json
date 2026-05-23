@@ -1,0 +1,30 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.luciq.ai/api/mcp/applications?platform=ios&limit=50",
+    "headers": {
+      "Authorization": "Bearer luciq_pat_xxxxxxxxxxxxxxxxxxxxxxxx",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "applications": [
+        {
+          "slug": "acme-mobile-ios",
+          "name": "Acme Mobile",
+          "platform": "ios",
+          "token": "8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d"
+        },
+        {
+          "slug": "acme-mobile-ios-beta",
+          "name": "Acme Mobile (Beta)",
+          "platform": "ios",
+          "token": "abcd1234efgh5678ijkl9012mnop3456"
+        }
+      ],
+      "total": 2
+    }
+  }
+}

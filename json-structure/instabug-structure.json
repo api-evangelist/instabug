@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-structure.org/schema/v0/",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/instabug/main/json-structure/instabug-structure.json",
+  "title": "Luciq Mobile Observability Structure",
+  "description": "JSON Structure outline of the Luciq mobile observability domain — applications, crashes (with grouped occurrences and pivot patterns), app hangs, user-reported bugs, and store/native/custom reviews.",
+  "version": "1.0",
+  "entities": [
+    {
+      "name": "Application",
+      "schema": "json-schema/instabug-application-schema.json",
+      "relations": [
+        { "to": "Crash", "via": "slug", "cardinality": "1..*" },
+        { "to": "AppHang", "via": "slug", "cardinality": "1..*" },
+        { "to": "Bug", "via": "slug", "cardinality": "1..*" },
+        { "to": "Review", "via": "token", "cardinality": "1..*" }
+      ]
+    },
+    {
+      "name": "Crash",
+      "schema": "json-schema/instabug-crash-schema.json",
+      "relations": [
+        { "to": "Application", "via": "slug", "cardinality": "*..1" },
+        { "to": "Occurrence", "via": "crash_number", "cardinality": "1..*" }
+      ]
+    },
+    {
+      "name": "Occurrence",
+      "schema": "json-schema/instabug-occurrence-schema.json",
+      "relations": [
+        { "to": "Crash", "via": "crash_number", "cardinality": "*..1" }
+      ]
+    },
+    {
+      "name": "AppHang",
+      "schema": "json-schema/instabug-app-hang-schema.json",
+      "relations": [
+        { "to": "Application", "via": "slug", "cardinality": "*..1" }
+      ]
+    },
+    {
+      "name": "Bug",
+      "schema": "json-schema/instabug-bug-schema.json",
+      "relations": [
+        { "to": "Application", "via": "slug", "cardinality": "*..1" }
+      ]
+    },
+    {
+      "name": "Review",
+      "schema": "json-schema/instabug-review-schema.json",
+      "relations": [
+        { "to": "Application", "via": "token", "cardinality": "*..1" }
+      ]
+    },
+    {
+      "name": "WebhookPayload",
+      "schema": "json-schema/instabug-webhook-payload-schema.json",
+      "discriminator": "Outbound event payload; one of BugPayload, CrashPayload, APMEventPayload"
+    }
+  ]
+}

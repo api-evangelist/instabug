@@ -1,0 +1,371 @@
+aid: instabug
+name: Instabug (Luciq)
+url: https://raw.githubusercontent.com/api-evangelist/instabug/refs/heads/main/apis.yml
+description: Instabug — now rebranded as Luciq — is an agentic mobile observability platform covering bug
+  reporting, crash reporting, application performance monitoring, session replay, surveys, feature flags,
+  rollout management, and AI agents (Detect, Resolve, Release). Public agent-facing surface is the Luciq MCP
+  Server at api.luciq.ai/api/mcp; data export, webhooks, and per-platform SDKs (iOS, Android, React Native,
+  Flutter, KMP) round out the API footprint.
+tags:
+- Agentic AI
+- APM
+- Application Performance Monitoring
+- Bug Reporting
+- Crash Reporting
+- MCP
+- Mobile
+- Mobile Observability
+- Observability
+- Session Replay
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+created: '2026-05-23'
+modified: '2026-05-23'
+specificationVersion: '0.18'
+apis:
+- aid: instabug:mcp-server
+  name: Luciq MCP Server
+  description: The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp
+    that exposes mobile observability data (applications, crashes, crash patterns, occurrences, app hangs,
+    bugs, reviews) as agent-callable tools. It uses Streamable HTTP transport over HTTPS (TLS 1.2+), OAuth
+    2.0 with Dynamic Client Registration for IDE/agent auth, and supports personal access tokens for CI
+    and automation. Available on all Luciq plans with no extra setup.
+  tags:
+  - Agentic AI
+  - Crashes
+  - MCP
+  - Mobile Observability
+  baseURL: https://api.luciq.ai/api/mcp
+  humanURL: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  - type: GettingStarted
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/getting-started
+  - type: Authentication
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/authentication-and-security
+  - type: ToolsReference
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
+  - type: OpenAPI
+    url: openapi/instabug-mcp-server-openapi.yml
+  - type: NaftikoCapability
+    url: capabilities/mcp-applications.yaml
+  - type: NaftikoCapability
+    url: capabilities/mcp-crashes.yaml
+  - type: NaftikoCapability
+    url: capabilities/mcp-occurrences.yaml
+  - type: NaftikoCapability
+    url: capabilities/mcp-app-hangs.yaml
+  - type: NaftikoCapability
+    url: capabilities/mcp-bugs.yaml
+  - type: NaftikoCapability
+    url: capabilities/mcp-reviews.yaml
+- aid: instabug:export-api
+  name: Luciq App Health Metrics Export API
+  description: Enterprise-only REST API for exporting App Health metrics (crash-free sessions, cold/hot app
+    launches, OOMs, ANRs) for ingest into Grafana, Datadog, or internal dashboards. Authentication and
+    endpoint paths are gated; access provisioned by a Luciq Customer Success Manager. Listed here for
+    inventory completeness — no public OpenAPI is published.
+  tags:
+  - App Health
+  - Crash-Free Sessions
+  - Data Export
+  - Enterprise
+  - Metrics
+  baseURL: https://api.luciq.ai
+  humanURL: https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis
+  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis
+  - type: AccessRequest
+    url: mailto:support@luciq.ai
+- aid: instabug:webhooks
+  name: Luciq Webhooks
+  description: Outbound HTTP POST webhooks deliver Bugs, Crashes, and APM events to a customer-configured
+    callback URL. Requests are signed with HMAC-SHA256 using a per-webhook secret and delivered with the
+    x-ibg-signature-256 header. Configurable per product (Bugs & Crashes or APM) and toggleable on demand
+    from the Luciq dashboard.
+  tags:
+  - APM Events
+  - Bugs
+  - Crashes
+  - Event-Driven
+  - Webhooks
+  humanURL: https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook
+  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook
+  - type: AsyncAPI
+    url: asyncapi/instabug-webhooks-asyncapi.yml
+- aid: instabug:ios-sdk
+  name: Luciq iOS SDK (formerly Instabug-iOS)
+  description: Native iOS SDK distributed via CocoaPods and Swift Package Manager covering bug reporting,
+    crash reporting, APM (app launch, network, screen rendering, screen loading, flows), session replay,
+    in-app surveys, in-app replies, feature requests, and app ratings. Supports both UIKit and SwiftUI
+    (including automatic SwiftUI screen-loading instrumentation).
+  tags:
+  - iOS
+  - Mobile SDK
+  - Swift
+  - SwiftUI
+  - UIKit
+  humanURL: https://docs.luciq.ai/ios
+  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/ios
+  - type: GitHubRepository
+    url: https://github.com/Instabug/Instabug-iOS
+  - type: SwiftPackage
+    url: https://github.com/Instabug/Instabug-SP
+- aid: instabug:android-sdk
+  name: Luciq Android SDK (formerly Instabug-Android)
+  description: Native Android SDK covering bug reporting, crash reporting (including ANR capture and
+    deobfuscation), APM (app launch, network, screen rendering, screen loading, execution traces, flows,
+    custom spans), session replay, surveys, in-app replies, feature requests, push notifications, app
+    ratings, and Jetpack Compose integration.
+  tags:
+  - Android
+  - Jetpack Compose
+  - Kotlin
+  - Mobile SDK
+  humanURL: https://docs.luciq.ai/android
+  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/android
+  - type: GitHubRepository
+    url: https://github.com/Instabug/Instabug-Android
+- aid: instabug:react-native-sdk
+  name: Luciq React Native SDK (formerly Instabug-React-Native)
+  description: React Native plugin wrapping the native iOS and Android Luciq SDKs. Adds Expo integration,
+    CodePush / Over-The-Air update support, plus bug reporting, crash reporting, APM, session replay,
+    surveys, in-app replies, and app ratings on the React Native runtime.
+  tags:
+  - Expo
+  - JavaScript
+  - Mobile SDK
+  - React Native
+  - TypeScript
+  humanURL: https://docs.luciq.ai/react-native
+  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/react-native
+  - type: GitHubRepository
+    url: https://github.com/Instabug/Instabug-React-Native
+- aid: instabug:flutter-sdk
+  name: Luciq Flutter SDK (formerly Instabug-Flutter)
+  description: Flutter plugin wrapping the native iOS and Android Luciq SDKs to deliver bug reporting,
+    crash reporting (with crash-free sessions), APM (app launch, network, screen loading, UI hangs, flows,
+    custom spans), session replay, in-app surveys, in-app replies, and app ratings inside Dart/Flutter
+    apps.
+  tags:
+  - Dart
+  - Flutter
+  - Mobile SDK
+  humanURL: https://docs.luciq.ai/flutter
+  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/flutter
+  - type: GitHubRepository
+    url: https://github.com/Instabug/Instabug-Flutter
+- aid: instabug:kmp-sdk
+  name: Luciq Kotlin Multiplatform SDK
+  description: Kotlin Multiplatform SDK that ships the Luciq mobile observability surface (bug reporting,
+    crash reporting, APM with Ktor network logging, session replay, surveys, in-app replies, feature
+    requests, custom spans, repro steps, session profiler) across iOS and Android targets from shared
+    Kotlin code.
+  tags:
+  - iOS
+  - Kotlin
+  - Kotlin Multiplatform
+  - Ktor
+  - Mobile SDK
+  humanURL: https://docs.luciq.ai/kmp
+  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/kmp
+common:
+- type: Portal
+  url: https://luciq.ai
+- type: Login
+  url: https://dashboard.luciq.ai/login
+- type: Documentation
+  url: https://docs.luciq.ai/
+- type: HelpCenter
+  url: https://help.luciq.ai/
+- type: Pricing
+  url: https://luciq.ai/pricing
+- type: Integrations
+  url: https://luciq.ai/integrations
+- type: Platforms
+  url: https://luciq.ai/platforms
+- type: MigrationHub
+  url: https://docs.luciq.ai/getting-started/luciq-migration-hub
+- type: Changelog
+  url: https://docs.luciq.ai/changelog/readme
+- type: Blog
+  url: https://luciq.ai/blog
+- type: GitHubOrganization
+  url: https://github.com/Instabug
+- type: LinkedIn
+  url: https://www.linkedin.com/company/instabug
+- type: Twitter
+  url: https://twitter.com/Instabug
+- type: Sitemap
+  url: https://docs.luciq.ai/sitemap.md
+- type: LLMsFullText
+  url: https://docs.luciq.ai/llms-full.txt
+- type: SecuritySOC2
+  url: https://luciq.ai/pricing
+- type: SubProcessors
+  url: https://docs.luciq.ai/organization-settings/others/sub-processors
+- type: GDPR
+  url: https://docs.luciq.ai/organization-settings/gdpr
+- type: AuditNotes
+  url: https://docs.luciq.ai/organization-settings/audit-notes
+- type: SSO
+  url: https://docs.luciq.ai/organization-settings/user-management/sso-using-saml
+- type: SCIM
+  url: https://docs.luciq.ai/organization-settings/user-management/scim-provisioning
+- type: Plans
+  url: plans/instabug-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/instabug-rate-limits.yml
+- type: FinOps
+  url: finops/instabug-finops.yml
+- type: JSONSchema
+  url: json-schema/instabug-application-schema.json
+- type: JSONSchema
+  url: json-schema/instabug-crash-schema.json
+- type: JSONSchema
+  url: json-schema/instabug-occurrence-schema.json
+- type: JSONSchema
+  url: json-schema/instabug-bug-schema.json
+- type: JSONSchema
+  url: json-schema/instabug-review-schema.json
+- type: JSONSchema
+  url: json-schema/instabug-app-hang-schema.json
+- type: JSONSchema
+  url: json-schema/instabug-webhook-payload-schema.json
+- type: JSONStructure
+  url: json-structure/instabug-structure.json
+- type: JSONLD
+  url: json-ld/instabug-context.jsonld
+- type: Vocabulary
+  url: vocabulary/instabug-vocabulary.yml
+- type: SpectralRules
+  url: rules/instabug-rules.yml
+- type: Branding
+  data:
+  - 'Brand transition: Instabug rebranded to Luciq in 2025'
+  - 'Tagline: "Agentic AI for Mobile Observability & Experience"'
+  - 'Positioning: "Luciq is the agentic observability platform built for mobile."'
+  - 'Legacy domain: instabug.com (301 redirects to luciq.ai)'
+  - 'Legacy docs: docs.instabug.com (301 redirects to docs.luciq.ai)'
+  - 'GitHub org name preserved: github.com/Instabug (44 public repos)'
+  sources:
+  - https://luciq.ai/
+  - https://docs.luciq.ai/getting-started/luciq-migration-hub
+  updated: '2026-05-23'
+- type: Customers
+  data:
+  - Figma
+  - Lyft
+  - DoorDash
+  - Disney
+  - General Motors
+  - AB InBev
+  - Decathlon
+  - Dabble
+  - Saturn
+  - Included
+  sources:
+  - https://luciq.ai/
+  updated: '2026-05-23'
+- type: Features
+  data:
+  - 'Observability pillar: crash detection, UI glitches, session replay, user feedback'
+  - 'Intelligence pillar: automated prioritization, business-impact scoring, frustration-free sessions'
+  - 'Resolution pillar: SmartResolve, root cause analysis, AI Debugging Assistant, automated pull requests'
+  - 'Prevention pillar: real-time alerts, release management, feature flags, PR review by Release Agent'
+  - 'AI agents: Detect Agent, Resolve Agent, Release Agent'
+  - 'Agent Skills: luciq-debug, luciq-setup, luciq-migrate'
+  - 'Luciq MCP Server with 10 tools across applications, crashes, occurrences, app hangs, bugs, reviews'
+  - 'SDKs across iOS, Android, React Native, Flutter, KMP (5 platforms)'
+  - 'Legacy SDKs: Cordova, Swift Package Manager standalone'
+  - '30+ third-party integrations (Jira, Slack, GitHub, PagerDuty, Datadog, Grafana, LaunchDarkly, etc.)'
+  - 'Webhooks with HMAC-SHA256 signing for Bugs, Crashes, APM events'
+  - 'Pricing model: priced on Daily Active Users (DAU) and Seats, not logs/sessions/traces'
+  - 'Per DAU entitlement: 180 sessions/month'
+  - 'Unlimited apps per account; unlimited integrations'
+  - 'SOC 2 Type II, SAML SSO, OAuth SSO, SCIM provisioning, RBAC, regional data pinning'
+  - 'Retention: Crash 180d, Bug 365d, APM 8w, Session Replay 4w, Surveys 365d'
+  - '100 Observer seats included on Enterprise plans'
+  sources:
+  - https://luciq.ai/pricing
+  - https://luciq.ai/platform
+  - https://docs.luciq.ai/organization-settings/billing/license-entitlements-and-restrictions/july-2025-license-entitlements-and-restrictions
+  - https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
+  updated: '2026-05-23'
+- type: Integrations
+  data:
+  - 'Project Management: Jira, Trello, Asana, ClickUp, Basecamp (v2 & v3), Shortcut, Pivotal Tracker, Teamwork Projects, Manuscript, Microsoft Azure DevOps, Phabricator'
+  - 'Notifications: Slack, Microsoft Teams'
+  - 'Incident Management: PagerDuty, Opsgenie'
+  - 'Customer Service: Zendesk, ServiceNow, Freshdesk, FrontApp'
+  - 'Source Control: GitHub, GitLab'
+  - 'SSO: Okta, OneLogin, Google Cloud Identity, SAML, OAuth'
+  - 'Observability: New Relic, Instana, Grafana, Datadog, Dynatrace'
+  - 'Feature Flags: LaunchDarkly'
+  - 'Other: Webhooks, Zapier, GitHub Marketplace, AWS Marketplace, Jira Marketplace'
+  sources:
+  - https://luciq.ai/integrations
+  - https://docs.luciq.ai/product-guides-and-integrations/integrations
+  updated: '2026-05-23'
+- type: MCPCapability
+  data:
+  - 'list_applications — Returns all applications accessible to the account; filters: platform, limit, offset'
+  - 'list_crashes — Crash groups for an app with occurrence frequency, affected users, cause'
+  - 'crash_details — Stack, versions, status, severity for a single crash'
+  - 'crash_patterns — Group crash occurrences by device, OS, app version, view, app status, experiments'
+  - 'list_occurrence_tokens — Lists individual crash occurrence ULIDs for drill-down'
+  - 'get_occurrence_details — Device, OS, memory, storage, app status, user, log URLs for one occurrence'
+  - 'list_app_hangs — Grouped UI freeze events for an application'
+  - 'list_bugs — User-reported bugs with status/priority/version filters'
+  - 'bug_details — Full bug payload: logs, user data, device metadata'
+  - 'list_reviews — App reviews from store/native/custom prompts with rating/version/country filters'
+  sources:
+  - https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
+  updated: '2026-05-23'
+- type: GitHubOrganizationProfile
+  data:
+  - 'Org URL: https://github.com/Instabug'
+  - 'Public repo count: 44'
+  - 'Active mobile SDKs: Instabug-iOS (Swift/Obj-C, 304 stars), Instabug-Android (Java/Kotlin, 189 stars), Instabug-React-Native (TypeScript, 329 stars), Instabug-Flutter (Dart, 165 stars), Instabug-SP (Swift Package, 14 stars)'
+  - 'Legacy/archived: Instabug-Cordova (22 stars)'
+  - 'Tools: luciq-cli (Ruby), fastlane-plugin-instabug-stores-upload (MIT)'
+  - 'Forks/internal: paperclip (file attachments), wasm-extensions (Istio Wasm)'
+  - 'Org tagline: Mobile observability and agentic solutions built for mobile applications'
+  sources:
+  - https://github.com/Instabug
+  updated: '2026-05-23'
+- type: BillingModel
+  data:
+  - 'Pricing dimension: Daily Active Users (DAU) and member Seats'
+  - 'Quote source: "Priced on DAU and Seats. No hidden fees. No surprise overages."'
+  - 'Sessions ratio: 180 sessions/month per 1 DAU'
+  - 'Observer seats: 100 included on Enterprise; more on request'
+  - 'Members/Associates: edit/read on assigned apps'
+  - 'Plans: Standard (annual commitment), Enterprise (customized), Enterprise Premier (24/7 + dedicated Slack)'
+  - 'Public pricing page does not list dollar amounts; book-a-demo / contact-sales flow'
+  sources:
+  - https://luciq.ai/pricing
+  - https://docs.luciq.ai/organization-settings/billing/enterprise-plans
+  - https://docs.luciq.ai/organization-settings/billing/license-entitlements-and-restrictions/july-2025-license-entitlements-and-restrictions
+  updated: '2026-05-23'

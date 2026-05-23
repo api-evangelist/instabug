@@ -1,0 +1,32 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.luciq.ai/api/mcp/applications/acme-mobile-ios/crashes?app_versions=4.12.0&status_id=new",
+    "headers": {
+      "Authorization": "Bearer luciq_pat_xxxxxxxxxxxxxxxxxxxxxxxx",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "crashes": [
+        {
+          "number": 1842,
+          "title": "EXC_BAD_ACCESS in CheckoutViewController.swift:212",
+          "first_seen": "2026-05-22T14:17:03Z",
+          "last_seen": "2026-05-23T09:44:11Z",
+          "occurrence_count": 173,
+          "affected_users": 96,
+          "status": "new",
+          "severity": "critical",
+          "cause": "Null dereference on cart.totalPriceCents",
+          "app_version": "4.12.0",
+          "os_version": "iOS 18.4",
+          "device": "iPhone 15 Pro",
+          "current_view": "CheckoutViewController"
+        }
+      ]
+    }
+  }
+}

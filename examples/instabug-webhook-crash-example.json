@@ -1,0 +1,34 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://acme.example.com/luciq/webhook",
+    "headers": {
+      "Content-Type": "application/json",
+      "User-Agent": "Luciq-Webhook/1.0",
+      "x-ibg-signature-256": "sha256=4f1d22cb7c1a6e9c5f3a4b7d8e1f2034..."
+    },
+    "body": {
+      "exception": "NSInternalInconsistencyException",
+      "number": 1842,
+      "url": "https://dashboard.luciq.ai/orgs/acme/apps/acme-mobile-ios/crashes/1842",
+      "status": "new",
+      "device": "iPhone 15 Pro",
+      "memory_mb": 187,
+      "storage_mb": 4216,
+      "battery_pct": 64,
+      "app_version": "4.12.0",
+      "console_log": "*** Terminating app due to uncaught exception 'NSInternalInconsistencyException'...",
+      "user_steps": [
+        { "type": "tap", "message": "Cart", "timestamp": "2026-05-23T09:43:58Z" },
+        { "type": "tap", "message": "Pay", "timestamp": "2026-05-23T09:44:11Z" }
+      ],
+      "image_attachments": [
+        "https://api.luciq.ai/attachments/01J0V8TYM7K2QXN3R5ZB9HCDEF.png"
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": { "received": true }
+  }
+}

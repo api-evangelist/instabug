@@ -1,0 +1,120 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Luciq MCP Server — Reviews
+  description: 'Luciq MCP Server — Reviews. 1 operation. Lead operation: List Reviews. Self-contained
+    Naftiko capability covering app store, native-prompt, and custom-prompt reviews captured through
+    the Luciq SDK, filterable by rating, version, country, device, prompt type, and OS.'
+  tags:
+  - Luciq
+  - Reviews
+  - MCP
+  - Ratings
+  created: '2026-05-23'
+  modified: '2026-05-23'
+binds:
+- namespace: env
+  keys:
+    LUCIQ_MCP_TOKEN: LUCIQ_MCP_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: mcp-reviews
+    baseUri: https://api.luciq.ai/api/mcp
+    description: Luciq MCP Server Reviews surface. Self-contained, no shared references.
+    resources:
+    - name: applications-application_token-reviews
+      path: /applications/{application_token}/reviews
+      operations:
+      - name: listreviews
+        method: GET
+        description: List Reviews
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: date_ms.gte
+          in: query
+          type: integer
+        - name: date_ms.lte
+          in: query
+          type: integer
+        - name: app_version
+          in: query
+          type: string
+        - name: rating
+          in: query
+          type: integer
+          description: 1-5 star rating filter.
+        - name: country
+          in: query
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+        - name: device
+          in: query
+          type: string
+        - name: prompt_type
+          in: query
+          type: string
+          description: One of store, native, custom.
+        - name: os
+          in: query
+          type: string
+          description: One of ios, android.
+    authentication:
+      type: bearer
+      key: Authorization
+      value: 'Bearer {{env.LUCIQ_MCP_TOKEN}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: mcp-reviews-rest
+    port: 8080
+    description: REST adapter for Luciq MCP Server — Reviews.
+    resources:
+    - path: /v1/applications/{application-token}/reviews
+      name: applications-application-token-reviews
+      description: REST surface for app reviews.
+      operations:
+      - method: GET
+        name: listreviews
+        description: List Reviews
+        call: mcp-reviews.listreviews
+        with:
+          date_ms.gte: rest.date_ms_gte
+          date_ms.lte: rest.date_ms_lte
+          app_version: rest.app_version
+          rating: rest.rating
+          country: rest.country
+          device: rest.device
+          prompt_type: rest.prompt_type
+          os: rest.os
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: mcp-reviews-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Luciq MCP Server — Reviews.
+    tools:
+    - name: list-reviews
+      description: List Reviews
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mcp-reviews.listreviews
+      with:
+        date_ms.gte: tools.date_ms_gte
+        date_ms.lte: tools.date_ms_lte
+        app_version: tools.app_version
+        rating: tools.rating
+        country: tools.country
+        device: tools.device
+        prompt_type: tools.prompt_type
+        os: tools.os
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,29 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.luciq.ai/api/mcp/applications/8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d/reviews?rating=1&os=ios&app_version=4.12.0",
+    "headers": {
+      "Authorization": "Bearer luciq_pat_xxxxxxxxxxxxxxxxxxxxxxxx",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "reviews": [
+        {
+          "id": "rev_98321",
+          "rating": 1,
+          "title": "Crashes on checkout",
+          "body": "Every time I tap Pay the app closes. Lost my cart.",
+          "country": "US",
+          "app_version": "4.12.0",
+          "device": "iPhone 15 Pro",
+          "os": "ios",
+          "prompt_type": "store",
+          "submitted_at": "2026-05-23T11:02:19Z"
+        }
+      ]
+    }
+  }
+}

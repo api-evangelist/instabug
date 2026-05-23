@@ -1,0 +1,149 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Luciq MCP Server — Occurrences
+  description: 'Luciq MCP Server — Occurrences. 2 operations. Lead operation: List Occurrence Tokens.
+    Self-contained Naftiko capability covering crash occurrence drill-down: enumerating ULIDs for a
+    crash group and fetching the full context (device, OS, memory, storage, app status, user, logs)
+    for one occurrence.'
+  tags:
+  - Luciq
+  - Occurrences
+  - MCP
+  - Crash Forensics
+  created: '2026-05-23'
+  modified: '2026-05-23'
+binds:
+- namespace: env
+  keys:
+    LUCIQ_MCP_TOKEN: LUCIQ_MCP_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: mcp-occurrences
+    baseUri: https://api.luciq.ai/api/mcp
+    description: Luciq MCP Server Occurrences surface. Self-contained, no shared references.
+    resources:
+    - name: applications-slug-crashes-number-occurrences
+      path: /applications/{slug}/crashes/{number}/occurrences
+      operations:
+      - name: listoccurrencetokens
+        method: GET
+        description: List Occurrence Tokens
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: foreground
+          in: query
+          type: boolean
+        - name: device
+          in: query
+          type: string
+        - name: os_version
+          in: query
+          type: string
+        - name: app_version
+          in: query
+          type: string
+        - name: experiments
+          in: query
+          type: array
+        - name: view
+          in: query
+          type: string
+        - name: date_from_ms
+          in: query
+          type: integer
+        - name: date_to_ms
+          in: query
+          type: integer
+    - name: applications-slug-crashes-number-occurrences-ulid
+      path: /applications/{slug}/crashes/{number}/occurrences/{ulid}
+      operations:
+      - name: getoccurrencedetails
+        method: GET
+        description: Get Occurrence Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      key: Authorization
+      value: 'Bearer {{env.LUCIQ_MCP_TOKEN}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: mcp-occurrences-rest
+    port: 8080
+    description: REST adapter for Luciq MCP Server — Occurrences.
+    resources:
+    - path: /v1/applications/{slug}/crashes/{number}/occurrences
+      name: applications-slug-crashes-number-occurrences
+      description: REST surface for occurrence tokens.
+      operations:
+      - method: GET
+        name: listoccurrencetokens
+        description: List Occurrence Tokens
+        call: mcp-occurrences.listoccurrencetokens
+        with:
+          foreground: rest.foreground
+          device: rest.device
+          os_version: rest.os_version
+          app_version: rest.app_version
+          experiments: rest.experiments
+          view: rest.view
+          date_from_ms: rest.date_from_ms
+          date_to_ms: rest.date_to_ms
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/applications/{slug}/crashes/{number}/occurrences/{ulid}
+      name: applications-slug-crashes-number-occurrences-ulid
+      description: REST surface for a single crash occurrence.
+      operations:
+      - method: GET
+        name: getoccurrencedetails
+        description: Get Occurrence Details
+        call: mcp-occurrences.getoccurrencedetails
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: mcp-occurrences-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Luciq MCP Server — Occurrences.
+    tools:
+    - name: list-occurrence-tokens
+      description: List Occurrence Tokens
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mcp-occurrences.listoccurrencetokens
+      with:
+        foreground: tools.foreground
+        device: tools.device
+        os_version: tools.os_version
+        app_version: tools.app_version
+        experiments: tools.experiments
+        view: tools.view
+        date_from_ms: tools.date_from_ms
+        date_to_ms: tools.date_to_ms
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-occurrence-details
+      description: Get Occurrence Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mcp-occurrences.getoccurrencedetails
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,106 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Luciq (formerly Instabug)
+providerId: instabug
+created: '2026-05-23'
+modified: '2026-05-23'
+reconciled: true
+tags:
+  - Mobile Observability
+  - APM
+  - Bug Reporting
+  - Crash Reporting
+description: >-
+  Luciq publishes pricing on Daily Active Users (DAU) and member Seats rather than logs,
+  sessions, or traces. The public pricing page does not list dollar amounts; the surfaced
+  tiers are the Standard plan (annual commitment), an Enterprise plan ("completely
+  customized depending on your needs"), and an Enterprise Premier upgrade with 24/7 +
+  dedicated Slack support. Entitlements below are sourced from the July 2025 License
+  Entitlements and Restrictions document.
+sources:
+  - https://luciq.ai/pricing
+  - https://docs.luciq.ai/organization-settings/billing/enterprise-plans
+  - https://docs.luciq.ai/organization-settings/billing/license-entitlements-and-restrictions/july-2025-license-entitlements-and-restrictions
+plans:
+  - id: instabug-standard
+    name: Standard
+    type: paid
+    description: Annual-commitment Standard plan with DAU-priced product packages and Enterprise-grade controls (SSO, SCIM, RBAC, regional data pinning, SOC 2 Type II).
+    entries:
+      - label: DAU (Daily Active Users)
+        name: dau
+        type: subscription
+        metric: dau
+        limit: -1
+        timeFrame: day
+        geo: global
+        unit: 1
+        price: custom
+        userMultiplied: true
+      - label: Member Seats
+        name: seats
+        type: subscription
+        metric: seat
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: custom
+        userMultiplied: true
+    elements:
+      - name: 180 sessions/month per 1 DAU
+      - name: Unlimited apps per account
+      - name: Unlimited integrations
+      - name: SOC 2 Type II
+      - name: SAML SSO + OAuth SSO + SCIM provisioning
+      - name: Role-Based Access Control
+      - name: Regional data pinning
+      - name: Standard support (chat + email; 2-21 EST)
+  - id: instabug-enterprise
+    name: Enterprise
+    type: enterprise
+    description: Customized plan with no fixed DAU/seat caps. Quote, "Our Enterprise plan is completely customized depending on your needs of features stated on our pricing page, with an annual commitment deal for the Standard plan."
+    entries:
+      - label: Custom DAU + Seats
+        name: custom
+        type: subscription
+        metric: year
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: custom
+        userMultiplied: true
+    elements:
+      - name: Full product suite (Bug Reporting, Crash Reporting, APM, Surveys, Session Replay)
+      - name: AI agents (Detect, Resolve, Release)
+      - name: Luciq MCP Server
+      - name: 100 Observer seats included (more on request)
+      - name: Members and Associates with edit/read on assigned apps
+      - name: Data retention — Crash 180d, Bug 365d, APM 8w, Session Replay 4w, Surveys 365d
+      - name: App Health Metrics Export API (Enterprise only)
+      - name: Dedicated CSM
+      - name: Custom SLA
+      - name: Standard queue response
+  - id: instabug-enterprise-premier
+    name: Enterprise Premier
+    type: enterprise
+    description: Premium support tier on top of Enterprise — 24/7 availability, dedicated Slack channel, custom SLA, immediate triage.
+    entries:
+      - label: Premier Support Add-On
+        name: premier
+        type: subscription
+        metric: year
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: custom
+        userMultiplied: false
+    elements:
+      - name: 24/7 support availability
+      - name: Dedicated Slack channel
+      - name: Custom SLA
+      - name: Immediate triage
+      - name: All Enterprise plan entitlements

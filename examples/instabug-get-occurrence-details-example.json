@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.luciq.ai/api/mcp/applications/acme-mobile-ios/crashes/1842/occurrences/01J0V8TYM7K2QXN3R5ZB9HCDEF",
+    "headers": {
+      "Authorization": "Bearer luciq_pat_xxxxxxxxxxxxxxxxxxxxxxxx",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "ulid": "01J0V8TYM7K2QXN3R5ZB9HCDEF",
+      "crash_number": 1842,
+      "timestamp": "2026-05-23T09:44:11Z",
+      "device": "iPhone 15 Pro",
+      "os": "ios",
+      "os_version": "18.4",
+      "app_version": "4.12.0",
+      "memory_mb": 187,
+      "storage_mb": 4216,
+      "app_status": "foreground",
+      "user_id": "u_47192",
+      "log_url": "https://api.luciq.ai/api/mcp/logs/01J0V8TYM7K2QXN3R5ZB9HCDEF.log"
+    }
+  }
+}

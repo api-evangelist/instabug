@@ -1,0 +1,111 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Luciq MCP Server — App Hangs
+  description: 'Luciq MCP Server — App Hangs. 1 operation. Lead operation: List App Hangs. Self-contained
+    Naftiko capability covering grouped UI freeze (hang) events for an application, filterable by date,
+    status, app version, device, OS, platform, and current view.'
+  tags:
+  - Luciq
+  - App Hangs
+  - MCP
+  - UI Performance
+  created: '2026-05-23'
+  modified: '2026-05-23'
+binds:
+- namespace: env
+  keys:
+    LUCIQ_MCP_TOKEN: LUCIQ_MCP_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: mcp-app-hangs
+    baseUri: https://api.luciq.ai/api/mcp
+    description: Luciq MCP Server App Hangs surface. Self-contained, no shared references.
+    resources:
+    - name: applications-slug-app-hangs
+      path: /applications/{slug}/app-hangs
+      operations:
+      - name: listapphangs
+        method: GET
+        description: List App Hangs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: date_ms
+          in: query
+          type: integer
+        - name: status_id
+          in: query
+          type: string
+        - name: app_versions
+          in: query
+          type: array
+        - name: devices
+          in: query
+          type: array
+        - name: os_versions
+          in: query
+          type: array
+        - name: platform
+          in: query
+          type: string
+        - name: current_views
+          in: query
+          type: array
+    authentication:
+      type: bearer
+      key: Authorization
+      value: 'Bearer {{env.LUCIQ_MCP_TOKEN}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: mcp-app-hangs-rest
+    port: 8080
+    description: REST adapter for Luciq MCP Server — App Hangs.
+    resources:
+    - path: /v1/applications/{slug}/app-hangs
+      name: applications-slug-app-hangs
+      description: REST surface for grouped UI hang events.
+      operations:
+      - method: GET
+        name: listapphangs
+        description: List App Hangs
+        call: mcp-app-hangs.listapphangs
+        with:
+          date_ms: rest.date_ms
+          status_id: rest.status_id
+          app_versions: rest.app_versions
+          devices: rest.devices
+          os_versions: rest.os_versions
+          platform: rest.platform
+          current_views: rest.current_views
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: mcp-app-hangs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Luciq MCP Server — App Hangs.
+    tools:
+    - name: list-app-hangs
+      description: List App Hangs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: mcp-app-hangs.listapphangs
+      with:
+        date_ms: tools.date_ms
+        status_id: tools.status_id
+        app_versions: tools.app_versions
+        devices: tools.devices
+        os_versions: tools.os_versions
+        platform: tools.platform
+        current_views: tools.current_views
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/instabug/main/json-schema/instabug-app-hang-schema.json",
+  "title": "Luciq App Hang",
+  "description": "A grouped UI freeze (hang) event for a mobile application. Hangs are non-fatal but user-perceptible UI thread blocks; Luciq groups them similar to crashes with occurrence counts, frequency, and environmental scope.",
+  "type": "object",
+  "required": ["number", "title"],
+  "properties": {
+    "number": { "type": "integer" },
+    "title": { "type": "string" },
+    "duration_ms": { "type": "integer", "minimum": 0 },
+    "first_seen": { "type": "string", "format": "date-time" },
+    "last_seen": { "type": "string", "format": "date-time" },
+    "occurrence_count": { "type": "integer", "minimum": 0 },
+    "app_version": { "type": "string" },
+    "os_version": { "type": "string" },
+    "device": { "type": "string" },
+    "current_view": { "type": "string" }
+  }
+}
