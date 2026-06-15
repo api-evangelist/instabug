@@ -1,24 +1,21 @@
-# Instabug / Luciq (instabug)
+# Instabug (Luciq) (instabug)
 
-Instabug — rebranded as **Luciq** in 2025 — is the agentic mobile observability platform covering bug reporting, crash reporting, application performance monitoring, session replay, in-app surveys, feature flags, rollout management, and AI agents (Detect, Resolve, Release). The public agent-facing surface is the Luciq MCP Server at `api.luciq.ai/api/mcp`; data export, outbound webhooks, and per-platform SDKs (iOS, Android, React Native, Flutter, Kotlin Multiplatform) round out the API footprint.
+Instabug — now rebranded as Luciq — is an agentic mobile observability platform covering bug reporting, crash reporting, application performance monitoring, session replay, surveys, feature flags, rollout management, and AI agents (Detect, Resolve, Release). Public agent-facing surface is the Luciq MCP Server at api.luciq.ai/api/mcp; data export, webhooks, and per-platform SDKs (iOS, Android, React Native, Flutter, KMP) round out the API footprint.
 
-> Quote: *"Luciq is the agentic observability platform built for mobile. Powered by intelligent agents that detect, diagnose, and resolve issues, before users feel them, so your team can ship confidently and your app just works."* — https://luciq.ai/platform
-
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/instabug/refs/heads/main/apis.yml)
-
-## Scope
-
-- **Type:** Contract
-- **Position:** Consuming
-- **Access:** 3rd-Party
-
-## Brand Note
-
-In 2025 Instabug rebranded to Luciq. `instabug.com` 301-redirects to `luciq.ai`; `docs.instabug.com` redirects to `docs.luciq.ai`. The GitHub organization remains at [github.com/Instabug](https://github.com/Instabug) (44 public repos). This `instabug` repo retains the legacy provider ID for continuity in the API Evangelist network; all artifacts cite the current Luciq documentation.
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/instabug/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/instabug/refs/heads/main/apis.yml)
 
 ## Tags
 
-Agentic AI, APM, Application Performance Monitoring, Bug Reporting, Crash Reporting, MCP, Mobile, Mobile Observability, Observability, Session Replay
+- Agentic AI
+- APM
+- Application Performance Monitoring
+- Bug Reporting
+- Crash Reporting
+- MCP
+- Mobile
+- Mobile Observability
+- Observability
+- Session Replay
 
 ## Timestamps
 
@@ -28,127 +25,215 @@ Agentic AI, APM, Application Performance Monitoring, Bug Reporting, Crash Report
 ## APIs
 
 ### Luciq MCP Server
-Remote Model Context Protocol server at `api.luciq.ai/api/mcp` exposing mobile observability data (applications, crashes, crash patterns, occurrences, app hangs, bugs, reviews) as 10 agent-callable tools. Transport: Streamable HTTP over HTTPS (TLS 1.2+). Auth: OAuth 2.0 with Dynamic Client Registration or personal access tokens. Available on all Luciq plans, no extra setup.
 
-**Human URL:** https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data (applications, crashes, crash patterns, occurrences, app hangs, bugs, reviews) as agent-callable tools. It uses Streamable HTTP transport over HTTPS (TLS 1.2+), OAuth 2.0 with Dynamic Client Registration for IDE/agent auth, and supports personal access tokens for CI and automation. Available on all Luciq plans with no extra setup.
 
-**Tags:** Agentic AI, Crashes, MCP, Mobile Observability
+- **Human URL:** [https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server](https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server)
+- **Base URL:** `https://api.luciq.ai/api/mcp`
 
-**Properties:**
+#### Tags
+
+- Agentic AI
+- Crashes
+- MCP
+- Mobile Observability
+
+#### Properties
+
 - [Documentation](https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server)
 - [Getting Started](https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/getting-started)
-- [Authentication & Security](https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/authentication-and-security)
-- [MCP Tools Reference](https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference)
-- [OpenAPI](openapi/instabug-mcp-server-openapi.yml)
-- [Naftiko Capability — Applications](capabilities/mcp-applications.yaml)
-- [Naftiko Capability — Crashes](capabilities/mcp-crashes.yaml)
-- [Naftiko Capability — Occurrences](capabilities/mcp-occurrences.yaml)
-- [Naftiko Capability — App Hangs](capabilities/mcp-app-hangs.yaml)
-- [Naftiko Capability — Bugs](capabilities/mcp-bugs.yaml)
-- [Naftiko Capability — Reviews](capabilities/mcp-reviews.yaml)
+- [Authentication](https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/authentication-and-security)
+- [Tools Reference](https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference)
+- [OpenAPI](openapi/instabug-mcp-server-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/instabug-mcp-server.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/instabug-mcp-server.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Luciq App Health Metrics Export API
-Enterprise-only REST API for exporting App Health metrics (crash-free sessions, cold/hot app launches, OOMs, ANRs) for ingest into Grafana, Datadog, or internal dashboards. Authentication and endpoint paths are gated; access provisioned by a Luciq CSM. **No public OpenAPI is published** — listed here for inventory completeness.
 
-**Human URL:** https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis
+Enterprise-only REST API for exporting App Health metrics (crash-free sessions, cold/hot app launches, OOMs, ANRs) for ingest into Grafana, Datadog, or internal dashboards. Authentication and endpoint paths are gated; access provisioned by a Luciq Customer Success Manager. Listed here for inventory completeness — no public OpenAPI is published.
 
-**Tags:** App Health, Crash-Free Sessions, Data Export, Enterprise, Metrics
+- **Human URL:** [https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis](https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis)
+- **Base URL:** `https://api.luciq.ai`
+
+#### Tags
+
+- App Health
+- Crash-Free Sessions
+- Data Export
+- Enterprise
+- Metrics
+
+#### Properties
+
+- [Documentation](https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis)
+- [Access Request](mailto:support@luciq.ai)
+- [Postman Collection](collections/instabug-mcp-server.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/instabug-mcp-server.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Luciq Webhooks
-Outbound HTTP POST webhooks deliver Bugs, Crashes, and APM events to a customer-configured callback URL. Requests are signed with HMAC-SHA256 (per-webhook secret, 16-64 char alphanumeric) and delivered with the `x-ibg-signature-256` header. Configurable per product from the Luciq dashboard.
 
-**Human URL:** https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook
+Outbound HTTP POST webhooks deliver Bugs, Crashes, and APM events to a customer-configured callback URL. Requests are signed with HMAC-SHA256 using a per-webhook secret and delivered with the x-ibg-signature-256 header. Configurable per product (Bugs & Crashes or APM) and toggleable on demand from the Luciq dashboard.
 
-**Tags:** APM Events, Bugs, Crashes, Event-Driven, Webhooks
+- **Human URL:** [https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook](https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook)
 
-**Properties:**
+#### Tags
+
+- APM Events
+- Bugs
+- Crashes
+- Event-Driven
+- Webhooks
+
+#### Properties
+
 - [Documentation](https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook)
-- [AsyncAPI](asyncapi/instabug-webhooks-asyncapi.yml)
+- [AsyncAPI](asyncapi/instabug-webhooks-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
+- [Postman Collection](collections/instabug-mcp-server.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/instabug-mcp-server.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Luciq iOS SDK (formerly Instabug-iOS)
-Native iOS SDK via CocoaPods/SPM covering bug reporting, crash reporting, APM, session replay, surveys, replies, feature requests, app ratings; UIKit and SwiftUI (with automatic SwiftUI screen-loading instrumentation).
 
-**Repo:** https://github.com/Instabug/Instabug-iOS
+Native iOS SDK distributed via CocoaPods and Swift Package Manager covering bug reporting, crash reporting, APM (app launch, network, screen rendering, screen loading, flows), session replay, in-app surveys, in-app replies, feature requests, and app ratings. Supports both UIKit and SwiftUI (including automatic SwiftUI screen-loading instrumentation).
+
+- **Human URL:** [https://docs.luciq.ai/ios](https://docs.luciq.ai/ios)
+
+#### Tags
+
+- iOS
+- Mobile SDK
+- Swift
+- SwiftUI
+- UIKit
+
+#### Properties
+
+- [Documentation](https://docs.luciq.ai/ios)
+- [GitHub Repository](https://github.com/Instabug/Instabug-iOS)
+- [Swift Package](https://github.com/Instabug/Instabug-SP)
+- [Postman Collection](collections/instabug-mcp-server.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/instabug-mcp-server.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Luciq Android SDK (formerly Instabug-Android)
-Native Android SDK with ANR capture, deobfuscation, full APM (app launch, network, screen rendering, screen loading, execution traces, flows, custom spans), Jetpack Compose integration, push notifications.
 
-**Repo:** https://github.com/Instabug/Instabug-Android
+Native Android SDK covering bug reporting, crash reporting (including ANR capture and deobfuscation), APM (app launch, network, screen rendering, screen loading, execution traces, flows, custom spans), session replay, surveys, in-app replies, feature requests, push notifications, app ratings, and Jetpack Compose integration.
+
+- **Human URL:** [https://docs.luciq.ai/android](https://docs.luciq.ai/android)
+
+#### Tags
+
+- Android
+- Jetpack Compose
+- Kotlin
+- Mobile SDK
+
+#### Properties
+
+- [Documentation](https://docs.luciq.ai/android)
+- [GitHub Repository](https://github.com/Instabug/Instabug-Android)
+- [Postman Collection](collections/instabug-mcp-server.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/instabug-mcp-server.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Luciq React Native SDK (formerly Instabug-React-Native)
-React Native plugin wrapping the native iOS/Android SDKs; Expo support; CodePush / Over-The-Air update integration.
 
-**Repo:** https://github.com/Instabug/Instabug-React-Native
+React Native plugin wrapping the native iOS and Android Luciq SDKs. Adds Expo integration, CodePush / Over-The-Air update support, plus bug reporting, crash reporting, APM, session replay, surveys, in-app replies, and app ratings on the React Native runtime.
+
+- **Human URL:** [https://docs.luciq.ai/react-native](https://docs.luciq.ai/react-native)
+
+#### Tags
+
+- Expo
+- JavaScript
+- Mobile SDK
+- React Native
+- TypeScript
+
+#### Properties
+
+- [Documentation](https://docs.luciq.ai/react-native)
+- [GitHub Repository](https://github.com/Instabug/Instabug-React-Native)
+- [Postman Collection](collections/instabug-mcp-server.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/instabug-mcp-server.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Luciq Flutter SDK (formerly Instabug-Flutter)
-Flutter plugin wrapping the native iOS/Android SDKs; crash-free sessions, APM (with UI hangs and flows), session replay, surveys, in-app replies.
 
-**Repo:** https://github.com/Instabug/Instabug-Flutter
+Flutter plugin wrapping the native iOS and Android Luciq SDKs to deliver bug reporting, crash reporting (with crash-free sessions), APM (app launch, network, screen loading, UI hangs, flows, custom spans), session replay, in-app surveys, in-app replies, and app ratings inside Dart/Flutter apps.
+
+- **Human URL:** [https://docs.luciq.ai/flutter](https://docs.luciq.ai/flutter)
+
+#### Tags
+
+- Dart
+- Flutter
+- Mobile SDK
+
+#### Properties
+
+- [Documentation](https://docs.luciq.ai/flutter)
+- [GitHub Repository](https://github.com/Instabug/Instabug-Flutter)
+- [Postman Collection](collections/instabug-mcp-server.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/instabug-mcp-server.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Luciq Kotlin Multiplatform SDK
-KMP SDK shipping the Luciq mobile observability surface across iOS and Android targets from shared Kotlin, with Ktor network logging.
 
-**Docs:** https://docs.luciq.ai/kmp
+Kotlin Multiplatform SDK that ships the Luciq mobile observability surface (bug reporting, crash reporting, APM with Ktor network logging, session replay, surveys, in-app replies, feature requests, custom spans, repro steps, session profiler) across iOS and Android targets from shared Kotlin code.
 
-## Generated Artifacts
+- **Human URL:** [https://docs.luciq.ai/kmp](https://docs.luciq.ai/kmp)
 
-| Type | Count | Folder |
-|---|---|---|
-| OpenAPI specs | 1 | `openapi/` |
-| AsyncAPI specs | 1 | `asyncapi/` |
-| Naftiko capabilities | 6 | `capabilities/` |
-| JSON Schemas | 7 | `json-schema/` |
-| JSON Structure | 1 | `json-structure/` |
-| JSON-LD context | 1 | `json-ld/` |
-| Example payloads | 6 | `examples/` |
-| Spectral rules | 1 | `rules/` |
-| Vocabulary | 1 | `vocabulary/` |
-| Plans (API Commons) | 1 | `plans/` |
-| Rate Limits (API Commons) | 1 | `rate-limits/` |
-| FinOps (FOCUS) | 1 | `finops/` |
+#### Tags
 
-## Common Resources
+- iOS
+- Kotlin
+- Kotlin Multiplatform
+- Ktor
+- Mobile SDK
 
-- **Portal:** https://luciq.ai
-- **Login:** https://dashboard.luciq.ai/login
-- **Docs:** https://docs.luciq.ai/
-- **Help Center:** https://help.luciq.ai/
-- **Pricing:** https://luciq.ai/pricing
-- **Integrations:** https://luciq.ai/integrations
-- **Migration Hub:** https://docs.luciq.ai/getting-started/luciq-migration-hub
-- **Changelog:** https://docs.luciq.ai/changelog/readme
-- **Blog:** https://luciq.ai/blog
-- **GitHub Organization:** https://github.com/Instabug
-- **LLMs Full Text:** https://docs.luciq.ai/llms-full.txt
-- **Sitemap:** https://docs.luciq.ai/sitemap.md
+#### Properties
 
-## Pricing Model (Verbatim)
+- [Documentation](https://docs.luciq.ai/kmp)
+- [Postman Collection](collections/instabug-mcp-server.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/instabug-mcp-server.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-> *"Priced on DAU and Seats. No hidden fees. No surprise overages."* — https://luciq.ai/pricing
+## Common Properties
 
-- Daily Active Users (DAU) + member Seats are the only pricing dimensions.
-- Per-DAU entitlement: 180 sessions/month.
-- Plans surfaced: **Standard** (annual commitment), **Enterprise** (fully customized), **Enterprise Premier** (24/7 + dedicated Slack).
-- 100 Observer seats included on Enterprise; more on request.
-- Retention: Crash 180d, Bug 365d, APM 8 weeks, Session Replay 4 weeks, Surveys 365d.
-- Security: SOC 2 Type II, SAML/OAuth SSO, SCIM provisioning, RBAC, regional data pinning.
-
-## Customers Cited on luciq.ai
-
-Figma · Lyft · DoorDash · Disney · General Motors · AB InBev · Decathlon · Dabble · Saturn · Included
-
-## Notable Findings
-
-- **Rebrand:** Instabug → Luciq in 2025. All `instabug.com` and `docs.instabug.com` URLs 301-redirect.
-- **MCP-first agent surface:** 10 tools across applications, crashes, crash patterns, occurrences, app hangs, bugs, reviews. OAuth 2.0 Dynamic Client Registration or PAT.
-- **No public REST API reference:** the historical Instabug REST API is being deprecated; the App Health Metrics Export API is Enterprise-gated.
-- **AI features:** Detect Agent, Resolve Agent, Release Agent, AI Debugging Assistant, SmartResolve, Agent Skills (`luciq-debug`, `luciq-setup`, `luciq-migrate`).
-- **GitHub:** 44 public repos, 5 active mobile SDKs (iOS, Android, React Native, Flutter, KMP) plus archived Cordova.
-
-## Notable Absences
-
-- No public OpenAPI for the Enterprise App Health Metrics Export API (gated; CSM-provisioned).
-- No public RSS/Atom feed surfaced on the blog or changelog (sitemap available).
-- No public dollar-amount pricing on the pricing page (book-a-demo / contact-sales flow).
-- `status.luciq.ai` returns ECONNREFUSED — no discoverable status page.
-- No Kubernetes CRDs (mobile observability provider, not infrastructure).
+- [Portal](https://luciq.ai)
+- [Login](https://dashboard.luciq.ai/login)
+- [Documentation](https://docs.luciq.ai/)
+- [Help Center](https://help.luciq.ai/)
+- [Pricing](https://luciq.ai/pricing)
+- [Integrations](https://luciq.ai/integrations)
+- [Platforms](https://luciq.ai/platforms)
+- [Migration Hub](https://docs.luciq.ai/getting-started/luciq-migration-hub)
+- [Changelog](https://docs.luciq.ai/changelog/readme)
+- [Blog](https://luciq.ai/blog)
+- [GitHub Organization](https://github.com/Instabug)
+- [LinkedIn](https://www.linkedin.com/company/instabug)
+- [Twitter](https://twitter.com/Instabug)
+- [Sitemap](https://docs.luciq.ai/sitemap.md)
+- [L L Ms Full Text](https://docs.luciq.ai/llms-full.txt)
+- [Security S O C2](https://luciq.ai/pricing)
+- [Sub Processors](https://docs.luciq.ai/organization-settings/others/sub-processors)
+- [G D P R](https://docs.luciq.ai/organization-settings/gdpr)
+- [Audit Notes](https://docs.luciq.ai/organization-settings/audit-notes)
+- [S S O](https://docs.luciq.ai/organization-settings/user-management/sso-using-saml)
+- [S C I M](https://docs.luciq.ai/organization-settings/user-management/scim-provisioning)
+- [Plans](plans/instabug-plans-pricing.yml)
+- [Rate Limits](rate-limits/instabug-rate-limits.yml)
+- [Fin Ops](finops/instabug-finops.yml)
+- [JSON Schema](json-schema/instabug-application-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/instabug-crash-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/instabug-occurrence-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/instabug-bug-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/instabug-review-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/instabug-app-hang-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/instabug-webhook-payload-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/instabug-structure.json)
+- [JSON-LD](json-ld/instabug-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [Vocabulary](vocabulary/instabug-vocabulary.yml)
+- [Spectral Rules](rules/instabug-rules.yml)
+- [Branding](undefined)
+- [Customers](undefined)
+- [Features](undefined)
+- [Integrations](undefined)
+- [M C P Capability](undefined)
+- [Git Hub Organization Profile](undefined)
+- [Billing Model](undefined)

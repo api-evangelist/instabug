@@ -2,10 +2,17 @@
   "repo": "instabug",
   "feeds": [
     {
+      "source": "https://luciq.ai/blog",
+      "feed_url": "https://luciq.ai/blog/rss.xml",
+      "title": "",
+      "saved": 1,
+      "method": "discovered"
+    },
+    {
       "source": "https://docs.luciq.ai/changelog/readme",
       "error": "HTTPError"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-06-01T23:35:02Z"
+  "post_count": 3,
+  "fetched": "2026-06-14T20:42:17Z"
 }

@@ -1,0 +1,2035 @@
+{
+  "item": [
+    {
+      "id": "0ea2a838-2c0a-4f0d-abc1-5d03ea075780",
+      "name": "Applications",
+      "description": {
+        "content": "Enumerate the mobile applications accessible to the authenticated account. Applications are the root scoping primitive for every other MCP tool in this surface.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f63af517-ef38-4d11-8cd4-10b76ef9008a",
+          "name": "List Applications",
+          "request": {
+            "name": "List Applications",
+            "description": {
+              "content": "Returns all applications accessible to the authenticated account. Backs the list_applications MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "platform",
+                  "value": "<string>",
+                  "description": "Filter applications by mobile platform."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db01e42b-857d-4c73-b1dd-38a2d40ec7db",
+              "name": "A page of applications.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"applications\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"platform\": \"android\",\n      \"token\": \"string\"\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"platform\": \"flutter\",\n      \"token\": \"string\"\n    }\n  ],\n  \"total\": 8597\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8adb8fb0-e731-45a2-a332-e3fe2bec0510",
+              "name": "Missing, expired, or invalid OAuth token / personal access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "3f51d424-7126-462d-92a2-34d0f65e2159",
+      "name": "Crashes",
+      "description": {
+        "content": "Inspect grouped crashes for a Luciq application, including occurrence frequency, affected users, root cause hints, and aggregation patterns by device, OS, app version, view, app status, and experiment.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e12b2ad9-df6f-44b5-b811-da242370e471",
+          "name": "List Crashes",
+          "request": {
+            "name": "List Crashes",
+            "description": {
+              "content": "Returns crash groups for an application with occurrence frequency, affected users, and cause hints. Backs the list_crashes MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":slug",
+                "crashes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date_ms",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "devices",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "devices",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "os_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "os_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "app_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "app_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "current_views",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "current_views",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "teams",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "teams",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "platform",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) The application slug as exposed by list_applications."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mode",
+                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1d612b05-09a2-4be6-96a3-4eba827ac5b7",
+              "name": "Crash groups for the application.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "crashes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_ms",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "status_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "devices",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "devices",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "os_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "os_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "app_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "app_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "current_views",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "current_views",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teams",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teams",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"crashes\": [\n    {\n      \"number\": 7464,\n      \"title\": \"string\",\n      \"first_seen\": \"2009-09-01T14:35:05.067Z\",\n      \"last_seen\": \"1967-10-01T17:24:49.670Z\",\n      \"occurrence_count\": 4552,\n      \"affected_users\": 1949,\n      \"status\": \"in-progress\",\n      \"severity\": \"string\",\n      \"cause\": \"string\",\n      \"app_version\": \"string\",\n      \"os_version\": \"string\",\n      \"device\": \"string\",\n      \"current_view\": \"string\"\n    },\n    {\n      \"number\": 4917,\n      \"title\": \"string\",\n      \"first_seen\": \"1984-03-12T20:11:37.325Z\",\n      \"last_seen\": \"1991-01-23T06:20:59.189Z\",\n      \"occurrence_count\": 6077,\n      \"affected_users\": 4902,\n      \"status\": \"new\",\n      \"severity\": \"string\",\n      \"cause\": \"string\",\n      \"app_version\": \"string\",\n      \"os_version\": \"string\",\n      \"device\": \"string\",\n      \"current_view\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "449ae346-d547-42e2-98ef-460332ab1b9e",
+              "name": "Missing, expired, or invalid OAuth token / personal access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "crashes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_ms",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "status_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "devices",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "devices",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "os_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "os_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "app_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "app_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "current_views",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "current_views",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teams",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "teams",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d46dee9c-247b-4763-8ac4-93c8b7ba8b6e",
+          "name": "Get Crash Details",
+          "request": {
+            "name": "Get Crash Details",
+            "description": {
+              "content": "Returns everything Luciq knows about a single crash — stack, versions, status, severity. Backs the crash_details MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":slug",
+                "crashes",
+                ":number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) The application slug as exposed by list_applications."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mode",
+                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "number",
+                  "description": "(Required) The crash or bug number within the application's mode scope."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b80567c2-fba0-44e9-8006-5f1298cc8155",
+              "name": "Crash group detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "crashes",
+                    ":number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) The crash or bug number within the application's mode scope."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"number\": 7211,\n  \"title\": \"string\",\n  \"first_seen\": \"1988-03-11T00:22:16.158Z\",\n  \"last_seen\": \"1997-06-05T21:16:07.741Z\",\n  \"occurrence_count\": 7419,\n  \"affected_users\": 5816,\n  \"status\": \"new\",\n  \"severity\": \"string\",\n  \"cause\": \"string\",\n  \"app_version\": \"string\",\n  \"os_version\": \"string\",\n  \"device\": \"string\",\n  \"current_view\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddbcd1b9-2918-4b15-b542-f6b50aedb316",
+              "name": "The requested resource does not exist or is not accessible.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "crashes",
+                    ":number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) The crash or bug number within the application's mode scope."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b54c029-b88a-4e2f-85be-92320259eb6c",
+          "name": "Get Crash Patterns",
+          "request": {
+            "name": "Get Crash Patterns",
+            "description": {
+              "content": "Groups crash occurrences by a pivot key — device, OS, app version, current view, app status, or experiments — to reveal concentration patterns. Backs the crash_patterns MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":slug",
+                "crashes",
+                ":number",
+                "patterns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pattern_key",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) The application slug as exposed by list_applications."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mode",
+                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "number",
+                  "description": "(Required) The crash or bug number within the application's mode scope."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "37625d7e-3439-491b-a31b-101c427d4df4",
+              "name": "Pattern aggregations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "crashes",
+                    ":number",
+                    "patterns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pattern_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) The crash or bug number within the application's mode scope."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pattern_key\": \"string\",\n  \"buckets\": [\n    {\n      \"value\": \"string\",\n      \"count\": 8204\n    },\n    {\n      \"value\": \"string\",\n      \"count\": 1377\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "13ec0cc4-81d1-4764-82f5-e6b7aee9ab76",
+      "name": "Occurrences",
+      "description": {
+        "content": "Drill down from a crash group into individual occurrence ULIDs and the full per-occurrence context: device, OS, memory, storage, app status, user identity, and log URLs.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "253d6d30-4c6d-4bff-936e-fc7406e8fa41",
+          "name": "List Occurrence Tokens",
+          "request": {
+            "name": "List Occurrence Tokens",
+            "description": {
+              "content": "Lists individual crash occurrence ULIDs for drilling down into specific user/device sessions. Backs the list_occurrence_tokens MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":slug",
+                "crashes",
+                ":number",
+                "occurrences"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "foreground",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "device",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "os_version",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "app_version",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "experiments",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "experiments",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "view",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "date_from_ms",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "date_to_ms",
+                  "value": "<long>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) The application slug as exposed by list_applications."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mode",
+                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "number",
+                  "description": "(Required) The crash or bug number within the application's mode scope."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "67d155d6-b528-46a5-b707-a1aa716ea6cc",
+              "name": "Occurrence ULIDs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "crashes",
+                    ":number",
+                    "occurrences"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "foreground",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "os_version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "app_version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "experiments",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "experiments",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "view",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_from_ms",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "date_to_ms",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) The crash or bug number within the application's mode scope."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ulids\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0249b8c-f154-4e12-82e9-f5d416bbd257",
+          "name": "Get Occurrence Details",
+          "request": {
+            "name": "Get Occurrence Details",
+            "description": {
+              "content": "Returns the exact context of one crash occurrence: device, OS, memory, storage, app status, user, and log URLs. Backs the get_occurrence_details MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":slug",
+                "crashes",
+                ":number",
+                "occurrences",
+                ":ulid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) The application slug as exposed by list_applications."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mode",
+                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "number",
+                  "description": "(Required) The crash or bug number within the application's mode scope."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<ulid>",
+                  "key": "ulid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e0ceaa74-fa28-4a86-8cfe-96379b3b81e7",
+              "name": "Single occurrence detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "crashes",
+                    ":number",
+                    "occurrences",
+                    ":ulid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) The crash or bug number within the application's mode scope."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<ulid>",
+                      "key": "ulid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ulid\": \"string\",\n  \"crash_number\": 8573,\n  \"timestamp\": \"2010-07-24T12:44:43.594Z\",\n  \"device\": \"string\",\n  \"os\": \"string\",\n  \"os_version\": \"string\",\n  \"app_version\": \"string\",\n  \"memory_mb\": 1906,\n  \"storage_mb\": 1086,\n  \"app_status\": \"background\",\n  \"user_id\": \"string\",\n  \"log_url\": \"https://sFCgfvT.eqETPH5oD0ISYA+m6bB\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "7e1c47f1-a137-48a4-ba6b-cce98e6ae80e",
+      "name": "App Hangs",
+      "description": {
+        "content": "Inspect grouped UI freeze (hang) events for a Luciq application, filterable by date, status, app version, device, OS, and current view.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e58e8dfc-7bb1-44a4-b629-238c9400e789",
+          "name": "List App Hangs",
+          "request": {
+            "name": "List App Hangs",
+            "description": {
+              "content": "Displays grouped UI freeze events for the application. Backs the list_app_hangs MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":slug",
+                "app-hangs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date_ms",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "app_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "app_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "devices",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "devices",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "os_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "os_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "platform",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "current_views",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "current_views",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) The application slug as exposed by list_applications."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mode",
+                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5646f4ac-d457-4829-a149-042df853ab8b",
+              "name": "Grouped UI hang events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "app-hangs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_ms",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "status_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "app_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "app_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "devices",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "devices",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "os_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "os_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "current_views",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "current_views",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hangs\": [\n    {\n      \"number\": 70,\n      \"title\": \"string\",\n      \"duration_ms\": 1759,\n      \"first_seen\": \"1999-08-06T09:29:35.719Z\",\n      \"last_seen\": \"1958-07-25T02:06:22.127Z\",\n      \"occurrence_count\": 940,\n      \"app_version\": \"string\",\n      \"os_version\": \"string\",\n      \"device\": \"string\",\n      \"current_view\": \"string\"\n    },\n    {\n      \"number\": 462,\n      \"title\": \"string\",\n      \"duration_ms\": 483,\n      \"first_seen\": \"1964-03-03T01:14:10.801Z\",\n      \"last_seen\": \"2008-01-14T08:51:28.064Z\",\n      \"occurrence_count\": 7997,\n      \"app_version\": \"string\",\n      \"os_version\": \"string\",\n      \"device\": \"string\",\n      \"current_view\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a64f2b4f-2ae8-4508-9ae2-520bd25d0b14",
+      "name": "Bugs",
+      "description": {
+        "content": "Read user-reported bugs submitted via the Luciq SDK report flow, filterable by status, priority, and app version, with full detail including logs, user data, and device metadata for reproduction.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ba7e8975-c7a2-415f-95d1-d9ee9abb20e6",
+          "name": "List Bugs",
+          "request": {
+            "name": "List Bugs",
+            "description": {
+              "content": "Returns user-reported bugs submitted via the Luciq SDK with filtering capabilities. Backs the list_bugs MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":slug",
+                "bugs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "priority",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "app_version",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) The application slug as exposed by list_applications."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mode",
+                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9a2ab153-beed-4450-a078-474b385ddc49",
+              "name": "A page of user-reported bugs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "bugs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "priority",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "app_version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bugs\": [\n    {\n      \"number\": 3073,\n      \"title\": \"string\",\n      \"reported_at\": \"1996-09-23T07:58:50.097Z\",\n      \"status\": \"new\",\n      \"priority\": \"critical\",\n      \"email\": \"64y@FKWNYnFFAvMzGXGJPjmawQeBXYvEfYJ.skl\",\n      \"app_version\": \"string\",\n      \"device\": \"string\",\n      \"user_steps\": [\n        {\n          \"type\": \"string\",\n          \"message\": \"string\",\n          \"timestamp\": \"1991-07-08T20:58:42.559Z\"\n        },\n        {\n          \"type\": \"string\",\n          \"message\": \"string\",\n          \"timestamp\": \"1990-05-31T18:55:39.061Z\"\n        }\n      ],\n      \"console_log\": \"string\",\n      \"attachments\": [\n        {\n          \"type\": \"file\",\n          \"url\": \"https://K.ktpEbWAOovoxZqWyhj0sKMlE7LBGeWWAzqi2RIQlcGOIWI+HivcTEH9m\"\n        },\n        {\n          \"type\": \"video\",\n          \"url\": \"https://BBYxS.ezrnpD57zCARrEuaMtNh6+nZCz1EFmAaVMCAELyPB7mVOKK3gMSCq4zV1Re\"\n        }\n      ]\n    },\n    {\n      \"number\": 2373,\n      \"title\": \"string\",\n      \"reported_at\": \"1964-01-27T04:46:06.646Z\",\n      \"status\": \"in-progress\",\n      \"priority\": \"major\",\n      \"email\": \"OlJKdhP7Um0mh@hiWhRVmKawqvNuk.tbo\",\n      \"app_version\": \"string\",\n      \"device\": \"string\",\n      \"user_steps\": [\n        {\n          \"type\": \"string\",\n          \"message\": \"string\",\n          \"timestamp\": \"2022-10-01T01:09:22.283Z\"\n        },\n        {\n          \"type\": \"string\",\n          \"message\": \"string\",\n          \"timestamp\": \"1959-06-30T15:18:46.457Z\"\n        }\n      ],\n      \"console_log\": \"string\",\n      \"attachments\": [\n        {\n          \"type\": \"file\",\n          \"url\": \"https://AcCf.msgmAe,geyD.dqMX8M6G0Bf8gUoU\"\n        },\n        {\n          \"type\": \"file\",\n          \"url\": \"https://nhncOOJfvkdTOuuMWqGLPmHOwuY.rtY2aI,1z8,CzFXM8uN.Wpqs6bROYWDqrde.7UUjKd9AhRH\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "abff5c08-c4b5-43f4-a591-b1f18ce86465",
+          "name": "Get Bug Details",
+          "request": {
+            "name": "Get Bug Details",
+            "description": {
+              "content": "Returns comprehensive bug information including logs, user data, and device metadata for reproduction. Backs the bug_details MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":slug",
+                "bugs",
+                ":number"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) The application slug as exposed by list_applications."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mode",
+                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "number",
+                  "description": "(Required) The crash or bug number within the application's mode scope."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b29bc3e0-7ca2-4d2c-b912-a2518c9c18aa",
+              "name": "Full bug record.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "bugs",
+                    ":number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) The crash or bug number within the application's mode scope."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"number\": 2909,\n  \"title\": \"string\",\n  \"reported_at\": \"1952-06-16T03:47:36.184Z\",\n  \"status\": \"closed\",\n  \"priority\": \"trivial\",\n  \"email\": \"gYwX1XPkWKoJ5@mvhxhLrHvElAF.fy\",\n  \"app_version\": \"string\",\n  \"device\": \"string\",\n  \"user_steps\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"timestamp\": \"1994-07-09T20:01:30.180Z\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"timestamp\": \"1989-01-24T13:20:52.659Z\"\n    }\n  ],\n  \"console_log\": \"string\",\n  \"attachments\": [\n    {\n      \"type\": \"file\",\n      \"url\": \"http://WUAjCiVbHqPXtTDHboLEKg.shmAWT\"\n    },\n    {\n      \"type\": \"file\",\n      \"url\": \"https://XzyVdWTcurLsg.hjhxh7.Iu0TMYme-QDGCCOSs,+-G7\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6679b313-dedd-4dce-9f4f-d5aaaa01aa9a",
+              "name": "The requested resource does not exist or is not accessible.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "bugs",
+                    ":number"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "number",
+                      "description": "(Required) The crash or bug number within the application's mode scope."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "17943598-cf9d-4403-ab0f-50facf08669d",
+      "name": "Reviews",
+      "description": {
+        "content": "Read app store, native-prompt, and custom-prompt reviews captured through the Luciq SDK, with filters for rating, version, country, device, prompt type, and OS.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "caa3980b-f436-4d45-8e31-2f93067def12",
+          "name": "List Reviews",
+          "request": {
+            "name": "List Reviews",
+            "description": {
+              "content": "Lists app reviews from store, native, and custom prompts with filters for rating, version, country, etc. Backs the list_reviews MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":application_token",
+                "reviews"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date_ms.gte",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "date_ms.lte",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "app_version",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "rating",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "device",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "prompt_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "os",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application_token",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "926d1cd6-927f-4ac6-86bd-2e72f2073cd3",
+              "name": "A page of reviews.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":application_token",
+                    "reviews"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_ms.gte",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "date_ms.lte",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "app_version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "rating",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prompt_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "os",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application_token",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reviews\": [\n    {\n      \"id\": \"string\",\n      \"rating\": 4,\n      \"title\": \"string\",\n      \"body\": \"string\",\n      \"country\": \"string\",\n      \"app_version\": \"string\",\n      \"device\": \"string\",\n      \"os\": \"ios\",\n      \"prompt_type\": \"custom\",\n      \"submitted_at\": \"2008-01-03T07:32:01.401Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"rating\": 3,\n      \"title\": \"string\",\n      \"body\": \"string\",\n      \"country\": \"string\",\n      \"app_version\": \"string\",\n      \"device\": \"string\",\n      \"os\": \"android\",\n      \"prompt_type\": \"custom\",\n      \"submitted_at\": \"2023-06-29T21:24:16.249Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.luciq.ai/api/mcp",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "mcp:read"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.luciq.ai/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.luciq.ai/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1a3d2f3c-dff8-4146-8804-d198fb34d9c6",
+    "name": "Luciq MCP Server",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data — applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews — as agent-callable tools. This OpenAPI document models the underlying read operations the MCP tools route to so they can be discovered, governed, and reused outside of an MCP client. Transport in production is Streamable HTTP over HTTPS (TLS 1.2+); authentication is OAuth 2.0 with Dynamic Client Registration or a personal access token issued from the Luciq dashboard. Available on all Luciq plans with no extra setup.\n\nContact Support:\n Name: Luciq Support\n Email: support@luciq.ai",
+      "type": "text/plain"
+    }
+  }
+}

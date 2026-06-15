@@ -1,0 +1,527 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Luciq MCP Server",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.luciq.ai/oauth/authorize",
+      "accessTokenUrl": "https://api.luciq.ai/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications",
+            "params": [
+              {
+                "name": "platform",
+                "value": "",
+                "type": "query",
+                "description": "Filter applications by mobile platform."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns all applications accessible to the authenticated account. Backs the list_applications MCP tool."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Crashes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Crashes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/crashes",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "date_ms",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "devices",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "os_versions",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "app_versions",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "current_views",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "teams",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "platform",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns crash groups for an application with occurrence frequency, affected users, and cause hints. Backs the list_crashes MCP tool."
+        },
+        {
+          "info": {
+            "name": "Get Crash Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/crashes/:number",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path",
+                "description": "The crash or bug number within the application's mode scope."
+              }
+            ]
+          },
+          "docs": "Returns everything Luciq knows about a single crash — stack, versions, status, severity. Backs the crash_details MCP tool."
+        },
+        {
+          "info": {
+            "name": "Get Crash Patterns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/crashes/:number/patterns",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path",
+                "description": "The crash or bug number within the application's mode scope."
+              },
+              {
+                "name": "pattern_key",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Groups crash occurrences by a pivot key — device, OS, app version, current view, app status, or experiments — to reveal concentration patterns. Backs the crash_patterns MCP tool."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Occurrences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Occurrence Tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/crashes/:number/occurrences",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path",
+                "description": "The crash or bug number within the application's mode scope."
+              },
+              {
+                "name": "foreground",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "os_version",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "app_version",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "experiments",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "date_from_ms",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "date_to_ms",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists individual crash occurrence ULIDs for drilling down into specific user/device sessions. Backs the list_occurrence_tokens MCP tool."
+        },
+        {
+          "info": {
+            "name": "Get Occurrence Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/crashes/:number/occurrences/:ulid",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path",
+                "description": "The crash or bug number within the application's mode scope."
+              },
+              {
+                "name": "ulid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the exact context of one crash occurrence: device, OS, memory, storage, app status, user, and log URLs. Backs the get_occurrence_details MCP tool."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "App Hangs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List App Hangs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/app-hangs",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "date_ms",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "app_versions",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "devices",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "os_versions",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "platform",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "current_views",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Displays grouped UI freeze events for the application. Backs the list_app_hangs MCP tool."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Bugs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bugs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/bugs",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "priority",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "app_version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns user-reported bugs submitted via the Luciq SDK with filtering capabilities. Backs the list_bugs MCP tool."
+        },
+        {
+          "info": {
+            "name": "Get Bug Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/bugs/:number",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path",
+                "description": "The crash or bug number within the application's mode scope."
+              }
+            ]
+          },
+          "docs": "Returns comprehensive bug information including logs, user data, and device metadata for reproduction. Backs the bug_details MCP tool."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reviews",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Reviews",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:application_token/reviews",
+            "params": [
+              {
+                "name": "application_token",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "date_ms.gte",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "date_ms.lte",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "app_version",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "rating",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "prompt_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "os",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists app reviews from store, native, and custom prompts with filters for rating, version, country, etc. Backs the list_reviews MCP tool."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
