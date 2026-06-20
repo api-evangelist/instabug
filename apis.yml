@@ -17,7 +17,7 @@ tags:
   - Mobile Observability
   - Observability
   - Session Replay
-image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 created: '2026-05-23'
 modified: '2026-05-23'
 specificationVersion: '0.18'
@@ -37,7 +37,7 @@ apis:
       - Mobile Observability
     baseURL: https://api.luciq.ai/api/mcp
     humanURL: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     properties:
       - type: Documentation
         url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
@@ -67,7 +67,7 @@ apis:
       - Metrics
     baseURL: https://api.luciq.ai
     humanURL: https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     properties:
       - type: Documentation
         url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis
@@ -86,7 +86,7 @@ apis:
       - Event-Driven
       - Webhooks
     humanURL: https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     properties:
       - type: Documentation
         url: https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook
@@ -106,7 +106,7 @@ apis:
       - SwiftUI
       - UIKit
     humanURL: https://docs.luciq.ai/ios
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     properties:
       - type: Documentation
         url: https://docs.luciq.ai/ios
@@ -126,7 +126,7 @@ apis:
       - Kotlin
       - Mobile SDK
     humanURL: https://docs.luciq.ai/android
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     properties:
       - type: Documentation
         url: https://docs.luciq.ai/android
@@ -145,7 +145,7 @@ apis:
       - React Native
       - TypeScript
     humanURL: https://docs.luciq.ai/react-native
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     properties:
       - type: Documentation
         url: https://docs.luciq.ai/react-native
@@ -162,7 +162,7 @@ apis:
       - Flutter
       - Mobile SDK
     humanURL: https://docs.luciq.ai/flutter
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     properties:
       - type: Documentation
         url: https://docs.luciq.ai/flutter
@@ -181,7 +181,7 @@ apis:
       - Ktor
       - Mobile SDK
     humanURL: https://docs.luciq.ai/kmp
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     properties:
       - type: Documentation
         url: https://docs.luciq.ai/kmp
