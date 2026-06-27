@@ -202,7 +202,7 @@ common:
     url: https://luciq.ai/platforms
   - type: MigrationHub
     url: https://docs.luciq.ai/getting-started/luciq-migration-hub
-  - type: Changelog
+  - type: ChangeLog
     url: https://docs.luciq.ai/changelog/readme
   - type: Blog
     url: https://luciq.ai/blog
