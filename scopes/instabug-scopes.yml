@@ -1,0 +1,20 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/instabug-mcp-server-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/instabug-mcp-server-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.luciq.ai/oauth/authorize
+    tokenUrl: https://api.luciq.ai/oauth/token
+  description: OAuth 2.0 with Dynamic Client Registration. The Luciq MCP server advertises its
+    authorization and token endpoints to MCP clients that register dynamically — no pre-shared
+    client ID/secret is required.
+scopes:
+- scope: mcp:read
+  description: Read access to applications, crashes, occurrences, hangs, bugs, and reviews
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/instabug-mcp-server-openapi.yml
