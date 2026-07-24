@@ -1,0 +1,266 @@
+openapi: 3.1.0
+info:
+  title: Luciq MCP Server App Hangs Crashes API
+  description: The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data — applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews — as agent-callable tools. This OpenAPI document models the underlying read operations the MCP tools route to so they can be discovered, governed, and reused outside of an MCP client. Transport in production is Streamable HTTP over HTTPS (TLS 1.2+); authentication is OAuth 2.0 with Dynamic Client Registration or a personal access token issued from the Luciq dashboard. Available on all Luciq plans with no extra setup.
+  version: '1.0'
+  contact:
+    name: Luciq Support
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+    email: support@luciq.ai
+  termsOfService: https://luciq.ai/terms
+  license:
+    name: Proprietary
+    url: https://luciq.ai/terms
+servers:
+- url: https://api.luciq.ai/api/mcp
+  description: Luciq MCP Server (Streamable HTTP)
+security:
+- oauth2: []
+- personalAccessToken: []
+tags:
+- name: Crashes
+  description: Inspect grouped crashes for a Luciq application, including occurrence frequency, affected users, root cause hints, and aggregation patterns by device, OS, app version, view, app status, and experiment.
+paths:
+  /applications/{slug}/crashes:
+    get:
+      operationId: listCrashes
+      summary: List Crashes
+      description: Returns crash groups for an application with occurrence frequency, affected users, and cause hints. Backs the list_crashes MCP tool.
+      tags:
+      - Crashes
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Mode'
+      - name: date_ms
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: status_id
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: devices
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: os_versions
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: app_versions
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: current_views
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: teams
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: platform
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ios
+          - android
+          - react_native
+          - flutter
+      responses:
+        '200':
+          description: Crash groups for the application.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  crashes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Crash'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /applications/{slug}/crashes/{number}:
+    get:
+      operationId: getCrashDetails
+      summary: Get Crash Details
+      description: Returns everything Luciq knows about a single crash — stack, versions, status, severity. Backs the crash_details MCP tool.
+      tags:
+      - Crashes
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Mode'
+      - $ref: '#/components/parameters/Number'
+      responses:
+        '200':
+          description: Crash group detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crash'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /applications/{slug}/crashes/{number}/patterns:
+    get:
+      operationId: getCrashPatterns
+      summary: Get Crash Patterns
+      description: Groups crash occurrences by a pivot key — device, OS, app version, current view, app status, or experiments — to reveal concentration patterns. Backs the crash_patterns MCP tool.
+      tags:
+      - Crashes
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Mode'
+      - $ref: '#/components/parameters/Number'
+      - name: pattern_key
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - devices
+          - oses
+          - app_versions
+          - current_views
+          - app_status
+          - experiments
+      responses:
+        '200':
+          description: Pattern aggregations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pattern_key:
+                    type: string
+                  buckets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                        count:
+                          type: integer
+components:
+  responses:
+    NotFound:
+      description: The requested resource does not exist or is not accessible.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing, expired, or invalid OAuth token / personal access token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Crash:
+      type: object
+      properties:
+        number:
+          type: integer
+        title:
+          type: string
+        first_seen:
+          type: string
+          format: date-time
+        last_seen:
+          type: string
+          format: date-time
+        occurrence_count:
+          type: integer
+        affected_users:
+          type: integer
+        status:
+          type: string
+          enum:
+          - new
+          - in-progress
+          - resolved
+          - ignored
+        severity:
+          type: string
+        cause:
+          type: string
+        app_version:
+          type: string
+        os_version:
+          type: string
+        device:
+          type: string
+        current_view:
+          type: string
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  parameters:
+    Slug:
+      name: slug
+      in: path
+      required: true
+      description: The application slug as exposed by list_applications.
+      schema:
+        type: string
+    Number:
+      name: number
+      in: path
+      required: true
+      description: The crash or bug number within the application's mode scope.
+      schema:
+        type: integer
+    Mode:
+      name: mode
+      in: path
+      required: true
+      description: The reporting mode for the application (crash, bug, etc.).
+      schema:
+        type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 with Dynamic Client Registration. The Luciq MCP server advertises its authorization and token endpoints to MCP clients that register dynamically — no pre-shared client ID/secret is required.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.luciq.ai/oauth/authorize
+          tokenUrl: https://api.luciq.ai/oauth/token
+          scopes:
+            mcp:read: Read access to applications, crashes, occurrences, hangs, bugs, and reviews
+    personalAccessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Personal Access Token generated from the Luciq dashboard under Account Management > Luciq MCP. Pass as `Authorization: Bearer <pat>`.'
+externalDocs:
+  description: Luciq MCP Tools Reference
+  url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference

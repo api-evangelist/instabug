@@ -1,0 +1,208 @@
+openapi: 3.1.0
+info:
+  title: Luciq MCP Server App Hangs Bugs API
+  description: The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data — applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews — as agent-callable tools. This OpenAPI document models the underlying read operations the MCP tools route to so they can be discovered, governed, and reused outside of an MCP client. Transport in production is Streamable HTTP over HTTPS (TLS 1.2+); authentication is OAuth 2.0 with Dynamic Client Registration or a personal access token issued from the Luciq dashboard. Available on all Luciq plans with no extra setup.
+  version: '1.0'
+  contact:
+    name: Luciq Support
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+    email: support@luciq.ai
+  termsOfService: https://luciq.ai/terms
+  license:
+    name: Proprietary
+    url: https://luciq.ai/terms
+servers:
+- url: https://api.luciq.ai/api/mcp
+  description: Luciq MCP Server (Streamable HTTP)
+security:
+- oauth2: []
+- personalAccessToken: []
+tags:
+- name: Bugs
+  description: Read user-reported bugs submitted via the Luciq SDK report flow, filterable by status, priority, and app version, with full detail including logs, user data, and device metadata for reproduction.
+paths:
+  /applications/{slug}/bugs:
+    get:
+      operationId: listBugs
+      summary: List Bugs
+      description: Returns user-reported bugs submitted via the Luciq SDK with filtering capabilities. Backs the list_bugs MCP tool.
+      tags:
+      - Bugs
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Mode'
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - new
+          - in-progress
+          - closed
+      - name: priority
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - trivial
+          - minor
+          - major
+          - critical
+          - blocker
+      - name: app_version
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A page of user-reported bugs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bugs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bug'
+  /applications/{slug}/bugs/{number}:
+    get:
+      operationId: getBugDetails
+      summary: Get Bug Details
+      description: Returns comprehensive bug information including logs, user data, and device metadata for reproduction. Backs the bug_details MCP tool.
+      tags:
+      - Bugs
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Mode'
+      - $ref: '#/components/parameters/Number'
+      responses:
+        '200':
+          description: Full bug record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bug'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: The requested resource does not exist or is not accessible.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    Slug:
+      name: slug
+      in: path
+      required: true
+      description: The application slug as exposed by list_applications.
+      schema:
+        type: string
+    Number:
+      name: number
+      in: path
+      required: true
+      description: The crash or bug number within the application's mode scope.
+      schema:
+        type: integer
+    Mode:
+      name: mode
+      in: path
+      required: true
+      description: The reporting mode for the application (crash, bug, etc.).
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Bug:
+      type: object
+      properties:
+        number:
+          type: integer
+        title:
+          type: string
+        reported_at:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+          - new
+          - in-progress
+          - closed
+        priority:
+          type: string
+          enum:
+          - trivial
+          - minor
+          - major
+          - critical
+          - blocker
+        email:
+          type: string
+          format: email
+        app_version:
+          type: string
+        device:
+          type: string
+        user_steps:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              message:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
+        console_log:
+          type: string
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                - image
+                - video
+                - file
+              url:
+                type: string
+                format: uri
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 with Dynamic Client Registration. The Luciq MCP server advertises its authorization and token endpoints to MCP clients that register dynamically — no pre-shared client ID/secret is required.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.luciq.ai/oauth/authorize
+          tokenUrl: https://api.luciq.ai/oauth/token
+          scopes:
+            mcp:read: Read access to applications, crashes, occurrences, hangs, bugs, and reviews
+    personalAccessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Personal Access Token generated from the Luciq dashboard under Account Management > Luciq MCP. Pass as `Authorization: Bearer <pat>`.'
+externalDocs:
+  description: Luciq MCP Tools Reference
+  url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference

@@ -1,0 +1,190 @@
+openapi: 3.1.0
+info:
+  title: Luciq MCP Server App Hangs Occurrences API
+  description: The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data — applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews — as agent-callable tools. This OpenAPI document models the underlying read operations the MCP tools route to so they can be discovered, governed, and reused outside of an MCP client. Transport in production is Streamable HTTP over HTTPS (TLS 1.2+); authentication is OAuth 2.0 with Dynamic Client Registration or a personal access token issued from the Luciq dashboard. Available on all Luciq plans with no extra setup.
+  version: '1.0'
+  contact:
+    name: Luciq Support
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+    email: support@luciq.ai
+  termsOfService: https://luciq.ai/terms
+  license:
+    name: Proprietary
+    url: https://luciq.ai/terms
+servers:
+- url: https://api.luciq.ai/api/mcp
+  description: Luciq MCP Server (Streamable HTTP)
+security:
+- oauth2: []
+- personalAccessToken: []
+tags:
+- name: Occurrences
+  description: 'Drill down from a crash group into individual occurrence ULIDs and the full per-occurrence context: device, OS, memory, storage, app status, user identity, and log URLs.'
+paths:
+  /applications/{slug}/crashes/{number}/occurrences:
+    get:
+      operationId: listOccurrenceTokens
+      summary: List Occurrence Tokens
+      description: Lists individual crash occurrence ULIDs for drilling down into specific user/device sessions. Backs the list_occurrence_tokens MCP tool.
+      tags:
+      - Occurrences
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Mode'
+      - $ref: '#/components/parameters/Number'
+      - name: foreground
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: device
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: os_version
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: app_version
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: experiments
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: view
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: date_from_ms
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: date_to_ms
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Occurrence ULIDs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ulids:
+                    type: array
+                    items:
+                      type: string
+                      format: ulid
+  /applications/{slug}/crashes/{number}/occurrences/{ulid}:
+    get:
+      operationId: getOccurrenceDetails
+      summary: Get Occurrence Details
+      description: 'Returns the exact context of one crash occurrence: device, OS, memory, storage, app status, user, and log URLs. Backs the get_occurrence_details MCP tool.'
+      tags:
+      - Occurrences
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Mode'
+      - $ref: '#/components/parameters/Number'
+      - name: ulid
+        in: path
+        required: true
+        schema:
+          type: string
+          format: ulid
+      responses:
+        '200':
+          description: Single occurrence detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occurrence'
+components:
+  schemas:
+    Occurrence:
+      type: object
+      properties:
+        ulid:
+          type: string
+          format: ulid
+        crash_number:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        device:
+          type: string
+        os:
+          type: string
+        os_version:
+          type: string
+        app_version:
+          type: string
+        memory_mb:
+          type: integer
+        storage_mb:
+          type: integer
+        app_status:
+          type: string
+          enum:
+          - foreground
+          - background
+        user_id:
+          type: string
+        log_url:
+          type: string
+          format: uri
+  parameters:
+    Slug:
+      name: slug
+      in: path
+      required: true
+      description: The application slug as exposed by list_applications.
+      schema:
+        type: string
+    Number:
+      name: number
+      in: path
+      required: true
+      description: The crash or bug number within the application's mode scope.
+      schema:
+        type: integer
+    Mode:
+      name: mode
+      in: path
+      required: true
+      description: The reporting mode for the application (crash, bug, etc.).
+      schema:
+        type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 with Dynamic Client Registration. The Luciq MCP server advertises its authorization and token endpoints to MCP clients that register dynamically — no pre-shared client ID/secret is required.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.luciq.ai/oauth/authorize
+          tokenUrl: https://api.luciq.ai/oauth/token
+          scopes:
+            mcp:read: Read access to applications, crashes, occurrences, hangs, bugs, and reviews
+    personalAccessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Personal Access Token generated from the Luciq dashboard under Account Management > Luciq MCP. Pass as `Authorization: Bearer <pat>`.'
+externalDocs:
+  description: Luciq MCP Tools Reference
+  url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference

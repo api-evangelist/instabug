@@ -1,0 +1,154 @@
+openapi: 3.1.0
+info:
+  title: Luciq MCP Server App Hangs API
+  description: The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data — applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews — as agent-callable tools. This OpenAPI document models the underlying read operations the MCP tools route to so they can be discovered, governed, and reused outside of an MCP client. Transport in production is Streamable HTTP over HTTPS (TLS 1.2+); authentication is OAuth 2.0 with Dynamic Client Registration or a personal access token issued from the Luciq dashboard. Available on all Luciq plans with no extra setup.
+  version: '1.0'
+  contact:
+    name: Luciq Support
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+    email: support@luciq.ai
+  termsOfService: https://luciq.ai/terms
+  license:
+    name: Proprietary
+    url: https://luciq.ai/terms
+servers:
+- url: https://api.luciq.ai/api/mcp
+  description: Luciq MCP Server (Streamable HTTP)
+security:
+- oauth2: []
+- personalAccessToken: []
+tags:
+- name: App Hangs
+  description: Inspect grouped UI freeze (hang) events for a Luciq application, filterable by date, status, app version, device, OS, and current view.
+paths:
+  /applications/{slug}/app-hangs:
+    get:
+      operationId: listAppHangs
+      summary: List App Hangs
+      description: Displays grouped UI freeze events for the application. Backs the list_app_hangs MCP tool.
+      tags:
+      - App Hangs
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/Mode'
+      - name: date_ms
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: status_id
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: app_versions
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: devices
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: os_versions
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: platform
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ios
+          - android
+          - react_native
+          - flutter
+      - name: current_views
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Grouped UI hang events.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hangs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppHang'
+components:
+  parameters:
+    Slug:
+      name: slug
+      in: path
+      required: true
+      description: The application slug as exposed by list_applications.
+      schema:
+        type: string
+    Mode:
+      name: mode
+      in: path
+      required: true
+      description: The reporting mode for the application (crash, bug, etc.).
+      schema:
+        type: string
+  schemas:
+    AppHang:
+      type: object
+      properties:
+        number:
+          type: integer
+        title:
+          type: string
+        duration_ms:
+          type: integer
+        first_seen:
+          type: string
+          format: date-time
+        last_seen:
+          type: string
+          format: date-time
+        occurrence_count:
+          type: integer
+        app_version:
+          type: string
+        os_version:
+          type: string
+        device:
+          type: string
+        current_view:
+          type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 with Dynamic Client Registration. The Luciq MCP server advertises its authorization and token endpoints to MCP clients that register dynamically — no pre-shared client ID/secret is required.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.luciq.ai/oauth/authorize
+          tokenUrl: https://api.luciq.ai/oauth/token
+          scopes:
+            mcp:read: Read access to applications, crashes, occurrences, hangs, bugs, and reviews
+    personalAccessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Personal Access Token generated from the Luciq dashboard under Account Management > Luciq MCP. Pass as `Authorization: Bearer <pat>`.'
+externalDocs:
+  description: Luciq MCP Tools Reference
+  url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference

@@ -1,0 +1,153 @@
+openapi: 3.1.0
+info:
+  title: Luciq MCP Server App Hangs Reviews API
+  description: The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data — applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews — as agent-callable tools. This OpenAPI document models the underlying read operations the MCP tools route to so they can be discovered, governed, and reused outside of an MCP client. Transport in production is Streamable HTTP over HTTPS (TLS 1.2+); authentication is OAuth 2.0 with Dynamic Client Registration or a personal access token issued from the Luciq dashboard. Available on all Luciq plans with no extra setup.
+  version: '1.0'
+  contact:
+    name: Luciq Support
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+    email: support@luciq.ai
+  termsOfService: https://luciq.ai/terms
+  license:
+    name: Proprietary
+    url: https://luciq.ai/terms
+servers:
+- url: https://api.luciq.ai/api/mcp
+  description: Luciq MCP Server (Streamable HTTP)
+security:
+- oauth2: []
+- personalAccessToken: []
+tags:
+- name: Reviews
+  description: Read app store, native-prompt, and custom-prompt reviews captured through the Luciq SDK, with filters for rating, version, country, device, prompt type, and OS.
+paths:
+  /applications/{application_token}/reviews:
+    get:
+      operationId: listReviews
+      summary: List Reviews
+      description: Lists app reviews from store, native, and custom prompts with filters for rating, version, country, etc. Backs the list_reviews MCP tool.
+      tags:
+      - Reviews
+      parameters:
+      - name: application_token
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: date_ms.gte
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: date_ms.lte
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int64
+      - name: app_version
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: rating
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 5
+      - name: country
+        in: query
+        required: false
+        schema:
+          type: string
+          description: ISO 3166-1 alpha-2 country code.
+      - name: device
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: prompt_type
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - store
+          - native
+          - custom
+      - name: os
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ios
+          - android
+      responses:
+        '200':
+          description: A page of reviews.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reviews:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Review'
+components:
+  schemas:
+    Review:
+      type: object
+      properties:
+        id:
+          type: string
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        title:
+          type: string
+        body:
+          type: string
+        country:
+          type: string
+        app_version:
+          type: string
+        device:
+          type: string
+        os:
+          type: string
+          enum:
+          - ios
+          - android
+        prompt_type:
+          type: string
+          enum:
+          - store
+          - native
+          - custom
+        submitted_at:
+          type: string
+          format: date-time
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 with Dynamic Client Registration. The Luciq MCP server advertises its authorization and token endpoints to MCP clients that register dynamically — no pre-shared client ID/secret is required.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.luciq.ai/oauth/authorize
+          tokenUrl: https://api.luciq.ai/oauth/token
+          scopes:
+            mcp:read: Read access to applications, crashes, occurrences, hangs, bugs, and reviews
+    personalAccessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Personal Access Token generated from the Luciq dashboard under Account Management > Luciq MCP. Pass as `Authorization: Bearer <pat>`.'
+externalDocs:
+  description: Luciq MCP Tools Reference
+  url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
