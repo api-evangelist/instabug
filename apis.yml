@@ -17,174 +17,308 @@ tags:
   - Mobile Observability
   - Observability
   - Session Replay
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/instabug.png
 created: '2026-05-23'
 modified: '2026-05-23'
 specificationVersion: '0.18'
 apis:
-  - aid: instabug:mcp-server
-    name: Luciq MCP Server
-    description: >-
-      The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile
-      observability data (applications, crashes, crash patterns, occurrences, app hangs, bugs, reviews) as
-      agent-callable tools. It uses Streamable HTTP transport over HTTPS (TLS 1.2+), OAuth 2.0 with Dynamic Client
-      Registration for IDE/agent auth, and supports personal access tokens for CI and automation. Available on all Luciq
-      plans with no extra setup.
-    tags:
-      - Agentic AI
-      - Crashes
-      - MCP
-      - Mobile Observability
-    baseURL: https://api.luciq.ai/api/mcp
-    humanURL: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    properties:
-      - type: Documentation
-        url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
-      - type: GettingStarted
-        url: >-
-          https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/getting-started
-      - type: Authentication
-        url: >-
-          https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/authentication-and-security
-      - type: ToolsReference
-        url: >-
-          https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
-      - type: OpenAPI
-        url: openapi/instabug-mcp-server-openapi.yml
-  - aid: instabug:export-api
-    name: Luciq App Health Metrics Export API
-    description: >-
-      Enterprise-only REST API for exporting App Health metrics (crash-free sessions, cold/hot app launches, OOMs, ANRs)
-      for ingest into Grafana, Datadog, or internal dashboards. Authentication and endpoint paths are gated; access
-      provisioned by a Luciq Customer Success Manager. Listed here for inventory completeness — no public OpenAPI is
-      published.
-    tags:
-      - App Health
-      - Crash-Free Sessions
-      - Data Export
-      - Enterprise
-      - Metrics
-    baseURL: https://api.luciq.ai
-    humanURL: https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    properties:
-      - type: Documentation
-        url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis
-      - type: AccessRequest
-        url: mailto:support@luciq.ai
-  - aid: instabug:webhooks
-    name: Luciq Webhooks
-    description: >-
-      Outbound HTTP POST webhooks deliver Bugs, Crashes, and APM events to a customer-configured callback URL. Requests
-      are signed with HMAC-SHA256 using a per-webhook secret and delivered with the x-ibg-signature-256 header.
-      Configurable per product (Bugs & Crashes or APM) and toggleable on demand from the Luciq dashboard.
-    tags:
-      - APM Events
-      - Bugs
-      - Crashes
-      - Event-Driven
-      - Webhooks
-    humanURL: https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    properties:
-      - type: Documentation
-        url: https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook
-      - type: AsyncAPI
-        url: asyncapi/instabug-webhooks-asyncapi.yml
-  - aid: instabug:ios-sdk
-    name: Luciq iOS SDK (formerly Instabug-iOS)
-    description: >-
-      Native iOS SDK distributed via CocoaPods and Swift Package Manager covering bug reporting, crash reporting, APM
-      (app launch, network, screen rendering, screen loading, flows), session replay, in-app surveys, in-app replies,
-      feature requests, and app ratings. Supports both UIKit and SwiftUI (including automatic SwiftUI screen-loading
-      instrumentation).
-    tags:
-      - iOS
-      - Mobile SDK
-      - Swift
-      - SwiftUI
-      - UIKit
-    humanURL: https://docs.luciq.ai/ios
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    properties:
-      - type: Documentation
-        url: https://docs.luciq.ai/ios
-      - type: GitHubRepository
-        url: https://github.com/Instabug/Instabug-iOS
-      - type: SwiftPackage
-        url: https://github.com/Instabug/Instabug-SP
-  - aid: instabug:android-sdk
-    name: Luciq Android SDK (formerly Instabug-Android)
-    description: >-
-      Native Android SDK covering bug reporting, crash reporting (including ANR capture and deobfuscation), APM (app
-      launch, network, screen rendering, screen loading, execution traces, flows, custom spans), session replay,
-      surveys, in-app replies, feature requests, push notifications, app ratings, and Jetpack Compose integration.
-    tags:
-      - Android
-      - Jetpack Compose
-      - Kotlin
-      - Mobile SDK
-    humanURL: https://docs.luciq.ai/android
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    properties:
-      - type: Documentation
-        url: https://docs.luciq.ai/android
-      - type: GitHubRepository
-        url: https://github.com/Instabug/Instabug-Android
-  - aid: instabug:react-native-sdk
-    name: Luciq React Native SDK (formerly Instabug-React-Native)
-    description: >-
-      React Native plugin wrapping the native iOS and Android Luciq SDKs. Adds Expo integration, CodePush / Over-The-Air
-      update support, plus bug reporting, crash reporting, APM, session replay, surveys, in-app replies, and app ratings
-      on the React Native runtime.
-    tags:
-      - Expo
-      - JavaScript
-      - Mobile SDK
-      - React Native
-      - TypeScript
-    humanURL: https://docs.luciq.ai/react-native
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    properties:
-      - type: Documentation
-        url: https://docs.luciq.ai/react-native
-      - type: GitHubRepository
-        url: https://github.com/Instabug/Instabug-React-Native
-  - aid: instabug:flutter-sdk
-    name: Luciq Flutter SDK (formerly Instabug-Flutter)
-    description: >-
-      Flutter plugin wrapping the native iOS and Android Luciq SDKs to deliver bug reporting, crash reporting (with
-      crash-free sessions), APM (app launch, network, screen loading, UI hangs, flows, custom spans), session replay,
-      in-app surveys, in-app replies, and app ratings inside Dart/Flutter apps.
-    tags:
-      - Dart
-      - Flutter
-      - Mobile SDK
-    humanURL: https://docs.luciq.ai/flutter
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    properties:
-      - type: Documentation
-        url: https://docs.luciq.ai/flutter
-      - type: GitHubRepository
-        url: https://github.com/Instabug/Instabug-Flutter
-  - aid: instabug:kmp-sdk
-    name: Luciq Kotlin Multiplatform SDK
-    description: >-
-      Kotlin Multiplatform SDK that ships the Luciq mobile observability surface (bug reporting, crash reporting, APM
-      with Ktor network logging, session replay, surveys, in-app replies, feature requests, custom spans, repro steps,
-      session profiler) across iOS and Android targets from shared Kotlin code.
-    tags:
-      - iOS
-      - Kotlin
-      - Kotlin Multiplatform
-      - Ktor
-      - Mobile SDK
-    humanURL: https://docs.luciq.ai/kmp
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    properties:
-      - type: Documentation
-        url: https://docs.luciq.ai/kmp
+- aid: instabug:export-api
+  name: Luciq App Health Metrics Export API
+  description: >-
+    Enterprise-only REST API for exporting App Health metrics (crash-free sessions, cold/hot app launches,
+    OOMs, ANRs) for ingest into Grafana, Datadog, or internal dashboards. Authentication and endpoint
+    paths are gated; access provisioned by a Luciq Customer Success Manager. Listed here for inventory
+    completeness — no public OpenAPI is published.
+  tags:
+  - App Health
+  - Crash-Free Sessions
+  - Data Export
+  - Enterprise
+  - Metrics
+  baseURL: https://api.luciq.ai
+  humanURL: https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/export-apis
+  - type: AccessRequest
+    url: mailto:support@luciq.ai
+- aid: instabug:webhooks
+  name: Luciq Webhooks
+  description: >-
+    Outbound HTTP POST webhooks deliver Bugs, Crashes, and APM events to a customer-configured callback
+    URL. Requests are signed with HMAC-SHA256 using a per-webhook secret and delivered with the x-ibg-signature-256
+    header. Configurable per product (Bugs & Crashes or APM) and toggleable on demand from the Luciq dashboard.
+  tags:
+  - APM Events
+  - Bugs
+  - Crashes
+  - Event-Driven
+  - Webhooks
+  humanURL: https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/product-guides-and-integrations/integrations/webhook
+  - type: AsyncAPI
+    url: asyncapi/instabug-webhooks-asyncapi.yml
+- aid: instabug:ios-sdk
+  name: Luciq iOS SDK (formerly Instabug-iOS)
+  description: >-
+    Native iOS SDK distributed via CocoaPods and Swift Package Manager covering bug reporting, crash reporting,
+    APM (app launch, network, screen rendering, screen loading, flows), session replay, in-app surveys,
+    in-app replies, feature requests, and app ratings. Supports both UIKit and SwiftUI (including automatic
+    SwiftUI screen-loading instrumentation).
+  tags:
+  - iOS
+  - Mobile SDK
+  - Swift
+  - SwiftUI
+  - UIKit
+  humanURL: https://docs.luciq.ai/ios
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/ios
+  - type: GitHubRepository
+    url: https://github.com/Instabug/Instabug-iOS
+  - type: SwiftPackage
+    url: https://github.com/Instabug/Instabug-SP
+- aid: instabug:android-sdk
+  name: Luciq Android SDK (formerly Instabug-Android)
+  description: >-
+    Native Android SDK covering bug reporting, crash reporting (including ANR capture and deobfuscation),
+    APM (app launch, network, screen rendering, screen loading, execution traces, flows, custom spans),
+    session replay, surveys, in-app replies, feature requests, push notifications, app ratings, and Jetpack
+    Compose integration.
+  tags:
+  - Android
+  - Jetpack Compose
+  - Kotlin
+  - Mobile SDK
+  humanURL: https://docs.luciq.ai/android
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/android
+  - type: GitHubRepository
+    url: https://github.com/Instabug/Instabug-Android
+- aid: instabug:react-native-sdk
+  name: Luciq React Native SDK (formerly Instabug-React-Native)
+  description: >-
+    React Native plugin wrapping the native iOS and Android Luciq SDKs. Adds Expo integration, CodePush
+    / Over-The-Air update support, plus bug reporting, crash reporting, APM, session replay, surveys,
+    in-app replies, and app ratings on the React Native runtime.
+  tags:
+  - Expo
+  - JavaScript
+  - Mobile SDK
+  - React Native
+  - TypeScript
+  humanURL: https://docs.luciq.ai/react-native
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/react-native
+  - type: GitHubRepository
+    url: https://github.com/Instabug/Instabug-React-Native
+- aid: instabug:flutter-sdk
+  name: Luciq Flutter SDK (formerly Instabug-Flutter)
+  description: >-
+    Flutter plugin wrapping the native iOS and Android Luciq SDKs to deliver bug reporting, crash reporting
+    (with crash-free sessions), APM (app launch, network, screen loading, UI hangs, flows, custom spans),
+    session replay, in-app surveys, in-app replies, and app ratings inside Dart/Flutter apps.
+  tags:
+  - Dart
+  - Flutter
+  - Mobile SDK
+  humanURL: https://docs.luciq.ai/flutter
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/flutter
+  - type: GitHubRepository
+    url: https://github.com/Instabug/Instabug-Flutter
+- aid: instabug:kmp-sdk
+  name: Luciq Kotlin Multiplatform SDK
+  description: >-
+    Kotlin Multiplatform SDK that ships the Luciq mobile observability surface (bug reporting, crash reporting,
+    APM with Ktor network logging, session replay, surveys, in-app replies, feature requests, custom spans,
+    repro steps, session profiler) across iOS and Android targets from shared Kotlin code.
+  tags:
+  - iOS
+  - Kotlin
+  - Kotlin Multiplatform
+  - Ktor
+  - Mobile SDK
+  humanURL: https://docs.luciq.ai/kmp
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  properties:
+  - type: Documentation
+    url: https://docs.luciq.ai/kmp
+- aid: instabug:instabug-app-hangs-api
+  name: Instabug (Luciq) App Hangs API
+  description: >-
+    Inspect grouped UI freeze (hang) events for a Luciq application, filterable by date, status, app version,
+    device, OS, and current view.
+  humanURL: >-
+    https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  baseURL: https://api.luciq.ai/api/mcp
+  tags:
+  - App Hangs
+  properties:
+  - type: OpenAPI
+    url: openapi/instabug-app-hangs-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  - type: GettingStarted
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/getting-started
+  - type: Authentication
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/authentication-and-security
+  - type: ToolsReference
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
+- aid: instabug:instabug-applications-api
+  name: Instabug (Luciq) Applications API
+  description: >-
+    Enumerate the mobile applications accessible to the authenticated account. Applications are the root
+    scoping primitive for every other MCP tool in this surface.
+  humanURL: >-
+    https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  baseURL: https://api.luciq.ai/api/mcp
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/instabug-applications-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  - type: GettingStarted
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/getting-started
+  - type: Authentication
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/authentication-and-security
+  - type: ToolsReference
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
+- aid: instabug:instabug-bugs-api
+  name: Instabug (Luciq) Bugs API
+  description: >-
+    Read user-reported bugs submitted via the Luciq SDK report flow, filterable by status, priority, and
+    app version, with full detail including logs, user data, and device metadata for reproduction.
+  humanURL: >-
+    https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  baseURL: https://api.luciq.ai/api/mcp
+  tags:
+  - Bugs
+  properties:
+  - type: OpenAPI
+    url: openapi/instabug-bugs-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  - type: GettingStarted
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/getting-started
+  - type: Authentication
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/authentication-and-security
+  - type: ToolsReference
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
+- aid: instabug:instabug-crashes-api
+  name: Instabug (Luciq) Crashes API
+  description: >-
+    Inspect grouped crashes for a Luciq application, including occurrence frequency, affected users, root
+    cause hints, and aggregation patterns by device, OS, app version, view, app status, and experiment.
+  humanURL: >-
+    https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  baseURL: https://api.luciq.ai/api/mcp
+  tags:
+  - Crashes
+  properties:
+  - type: OpenAPI
+    url: openapi/instabug-crashes-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  - type: GettingStarted
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/getting-started
+  - type: Authentication
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/authentication-and-security
+  - type: ToolsReference
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
+- aid: instabug:instabug-occurrences-api
+  name: Instabug (Luciq) Occurrences API
+  description: >-
+    Drill down from a crash group into individual occurrence ULIDs and the full per-occurrence context:
+    device, OS, memory, storage, app status, user identity, and log URLs.
+  humanURL: >-
+    https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  baseURL: https://api.luciq.ai/api/mcp
+  tags:
+  - Occurrences
+  properties:
+  - type: OpenAPI
+    url: openapi/instabug-occurrences-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  - type: GettingStarted
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/getting-started
+  - type: Authentication
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/authentication-and-security
+  - type: ToolsReference
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
+- aid: instabug:instabug-reviews-api
+  name: Instabug (Luciq) Reviews API
+  description: >-
+    Read app store, native-prompt, and custom-prompt reviews captured through the Luciq SDK, with filters
+    for rating, version, country, device, prompt type, and OS.
+  humanURL: >-
+    https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  baseURL: https://api.luciq.ai/api/mcp
+  tags:
+  - Reviews
+  properties:
+  - type: OpenAPI
+    url: openapi/instabug-reviews-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+  - type: GettingStarted
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/getting-started
+  - type: Authentication
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/authentication-and-security
+  - type: ToolsReference
+    url: >-
+      https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
 common:
   - type: AgenticAccess
     url: agentic-access/instabug-agentic-access.yml
