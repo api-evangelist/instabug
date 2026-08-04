@@ -1,0 +1,24 @@
+{
+  "provider": "instabug",
+  "sources": [
+    "instabug-app-hangs-api-openapi.yml",
+    "instabug-applications-api-openapi.yml",
+    "instabug-bugs-api-openapi.yml",
+    "instabug-crashes-api-openapi.yml",
+    "instabug-occurrences-api-openapi.yml",
+    "instabug-reviews-api-openapi.yml"
+  ],
+  "outputs": [
+    "instabug-app-hangs-api-openapi.yml",
+    "instabug-applications-api-openapi.yml",
+    "instabug-bugs-api-openapi.yml",
+    "instabug-crashes-api-openapi.yml",
+    "instabug-occurrences-api-openapi.yml",
+    "instabug-reviews-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

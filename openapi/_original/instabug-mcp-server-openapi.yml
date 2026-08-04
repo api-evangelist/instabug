@@ -1,0 +1,796 @@
+openapi: 3.1.0
+info:
+  title: Luciq MCP Server
+  description: >-
+    The Luciq MCP Server is a remote Model Context Protocol server hosted at
+    api.luciq.ai/api/mcp that exposes mobile observability data — applications,
+    crashes, crash patterns, occurrences, app hangs, bugs, and store reviews —
+    as agent-callable tools. This OpenAPI document models the underlying read
+    operations the MCP tools route to so they can be discovered, governed, and
+    reused outside of an MCP client. Transport in production is Streamable
+    HTTP over HTTPS (TLS 1.2+); authentication is OAuth 2.0 with Dynamic
+    Client Registration or a personal access token issued from the Luciq
+    dashboard. Available on all Luciq plans with no extra setup.
+  version: '1.0'
+  contact:
+    name: Luciq Support
+    url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server
+    email: support@luciq.ai
+  termsOfService: https://luciq.ai/terms
+  license:
+    name: Proprietary
+    url: https://luciq.ai/terms
+externalDocs:
+  description: Luciq MCP Tools Reference
+  url: https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
+servers:
+  - url: https://api.luciq.ai/api/mcp
+    description: Luciq MCP Server (Streamable HTTP)
+tags:
+  - name: Applications
+    description: >-
+      Enumerate the mobile applications accessible to the authenticated
+      account. Applications are the root scoping primitive for every other
+      MCP tool in this surface.
+  - name: Crashes
+    description: >-
+      Inspect grouped crashes for a Luciq application, including occurrence
+      frequency, affected users, root cause hints, and aggregation patterns
+      by device, OS, app version, view, app status, and experiment.
+  - name: Occurrences
+    description: >-
+      Drill down from a crash group into individual occurrence ULIDs and the
+      full per-occurrence context: device, OS, memory, storage, app status,
+      user identity, and log URLs.
+  - name: App Hangs
+    description: >-
+      Inspect grouped UI freeze (hang) events for a Luciq application,
+      filterable by date, status, app version, device, OS, and current view.
+  - name: Bugs
+    description: >-
+      Read user-reported bugs submitted via the Luciq SDK report flow,
+      filterable by status, priority, and app version, with full detail
+      including logs, user data, and device metadata for reproduction.
+  - name: Reviews
+    description: >-
+      Read app store, native-prompt, and custom-prompt reviews captured
+      through the Luciq SDK, with filters for rating, version, country,
+      device, prompt type, and OS.
+security:
+  - oauth2: []
+  - personalAccessToken: []
+paths:
+  /applications:
+    get:
+      operationId: listApplications
+      summary: List Applications
+      description: >-
+        Returns all applications accessible to the authenticated account.
+        Backs the list_applications MCP tool.
+      tags:
+        - Applications
+      parameters:
+        - name: platform
+          in: query
+          required: false
+          description: Filter applications by mobile platform.
+          schema:
+            type: string
+            enum: [ios, android, react_native, flutter]
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+            minimum: 1
+            maximum: 200
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+      responses:
+        '200':
+          description: A page of applications.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  applications:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Application'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /applications/{slug}/crashes:
+    get:
+      operationId: listCrashes
+      summary: List Crashes
+      description: >-
+        Returns crash groups for an application with occurrence frequency,
+        affected users, and cause hints. Backs the list_crashes MCP tool.
+      tags:
+        - Crashes
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Mode'
+        - name: date_ms
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: status_id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: devices
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: os_versions
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: app_versions
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: current_views
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: teams
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: platform
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [ios, android, react_native, flutter]
+      responses:
+        '200':
+          description: Crash groups for the application.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  crashes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Crash'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /applications/{slug}/crashes/{number}:
+    get:
+      operationId: getCrashDetails
+      summary: Get Crash Details
+      description: >-
+        Returns everything Luciq knows about a single crash — stack, versions,
+        status, severity. Backs the crash_details MCP tool.
+      tags:
+        - Crashes
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Mode'
+        - $ref: '#/components/parameters/Number'
+      responses:
+        '200':
+          description: Crash group detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crash'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /applications/{slug}/crashes/{number}/patterns:
+    get:
+      operationId: getCrashPatterns
+      summary: Get Crash Patterns
+      description: >-
+        Groups crash occurrences by a pivot key — device, OS, app version,
+        current view, app status, or experiments — to reveal concentration
+        patterns. Backs the crash_patterns MCP tool.
+      tags:
+        - Crashes
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Mode'
+        - $ref: '#/components/parameters/Number'
+        - name: pattern_key
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [devices, oses, app_versions, current_views, app_status, experiments]
+      responses:
+        '200':
+          description: Pattern aggregations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pattern_key:
+                    type: string
+                  buckets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                        count:
+                          type: integer
+  /applications/{slug}/crashes/{number}/occurrences:
+    get:
+      operationId: listOccurrenceTokens
+      summary: List Occurrence Tokens
+      description: >-
+        Lists individual crash occurrence ULIDs for drilling down into specific
+        user/device sessions. Backs the list_occurrence_tokens MCP tool.
+      tags:
+        - Occurrences
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Mode'
+        - $ref: '#/components/parameters/Number'
+        - name: foreground
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: device
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: os_version
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: app_version
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: experiments
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: view
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: date_from_ms
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: date_to_ms
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Occurrence ULIDs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ulids:
+                    type: array
+                    items:
+                      type: string
+                      format: ulid
+  /applications/{slug}/crashes/{number}/occurrences/{ulid}:
+    get:
+      operationId: getOccurrenceDetails
+      summary: Get Occurrence Details
+      description: >-
+        Returns the exact context of one crash occurrence: device, OS, memory,
+        storage, app status, user, and log URLs. Backs the
+        get_occurrence_details MCP tool.
+      tags:
+        - Occurrences
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Mode'
+        - $ref: '#/components/parameters/Number'
+        - name: ulid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: ulid
+      responses:
+        '200':
+          description: Single occurrence detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occurrence'
+  /applications/{slug}/app-hangs:
+    get:
+      operationId: listAppHangs
+      summary: List App Hangs
+      description: >-
+        Displays grouped UI freeze events for the application. Backs the
+        list_app_hangs MCP tool.
+      tags:
+        - App Hangs
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Mode'
+        - name: date_ms
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: status_id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: app_versions
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: devices
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: os_versions
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: platform
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [ios, android, react_native, flutter]
+        - name: current_views
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Grouped UI hang events.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hangs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AppHang'
+  /applications/{slug}/bugs:
+    get:
+      operationId: listBugs
+      summary: List Bugs
+      description: >-
+        Returns user-reported bugs submitted via the Luciq SDK with filtering
+        capabilities. Backs the list_bugs MCP tool.
+      tags:
+        - Bugs
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Mode'
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [new, in-progress, closed]
+        - name: priority
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [trivial, minor, major, critical, blocker]
+        - name: app_version
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A page of user-reported bugs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bugs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bug'
+  /applications/{slug}/bugs/{number}:
+    get:
+      operationId: getBugDetails
+      summary: Get Bug Details
+      description: >-
+        Returns comprehensive bug information including logs, user data, and
+        device metadata for reproduction. Backs the bug_details MCP tool.
+      tags:
+        - Bugs
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+        - $ref: '#/components/parameters/Mode'
+        - $ref: '#/components/parameters/Number'
+      responses:
+        '200':
+          description: Full bug record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bug'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /applications/{application_token}/reviews:
+    get:
+      operationId: listReviews
+      summary: List Reviews
+      description: >-
+        Lists app reviews from store, native, and custom prompts with filters
+        for rating, version, country, etc. Backs the list_reviews MCP tool.
+      tags:
+        - Reviews
+      parameters:
+        - name: application_token
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: date_ms.gte
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: date_ms.lte
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: app_version
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: rating
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 5
+        - name: country
+          in: query
+          required: false
+          schema:
+            type: string
+            description: ISO 3166-1 alpha-2 country code.
+        - name: device
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: prompt_type
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [store, native, custom]
+        - name: os
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [ios, android]
+      responses:
+        '200':
+          description: A page of reviews.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reviews:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Review'
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 with Dynamic Client Registration. The Luciq MCP server
+        advertises its authorization and token endpoints to MCP clients that
+        register dynamically — no pre-shared client ID/secret is required.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.luciq.ai/oauth/authorize
+          tokenUrl: https://api.luciq.ai/oauth/token
+          scopes:
+            mcp:read: Read access to applications, crashes, occurrences, hangs, bugs, and reviews
+    personalAccessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: >-
+        Personal Access Token generated from the Luciq dashboard under
+        Account Management > Luciq MCP. Pass as `Authorization: Bearer <pat>`.
+  parameters:
+    Slug:
+      name: slug
+      in: path
+      required: true
+      description: The application slug as exposed by list_applications.
+      schema:
+        type: string
+    Mode:
+      name: mode
+      in: path
+      required: true
+      description: The reporting mode for the application (crash, bug, etc.).
+      schema:
+        type: string
+    Number:
+      name: number
+      in: path
+      required: true
+      description: The crash or bug number within the application's mode scope.
+      schema:
+        type: integer
+  responses:
+    Unauthorized:
+      description: Missing, expired, or invalid OAuth token / personal access token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource does not exist or is not accessible.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Application:
+      type: object
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+        platform:
+          type: string
+          enum: [ios, android, react_native, flutter]
+        token:
+          type: string
+          description: Application token used for review queries.
+    Crash:
+      type: object
+      properties:
+        number:
+          type: integer
+        title:
+          type: string
+        first_seen:
+          type: string
+          format: date-time
+        last_seen:
+          type: string
+          format: date-time
+        occurrence_count:
+          type: integer
+        affected_users:
+          type: integer
+        status:
+          type: string
+          enum: [new, in-progress, resolved, ignored]
+        severity:
+          type: string
+        cause:
+          type: string
+        app_version:
+          type: string
+        os_version:
+          type: string
+        device:
+          type: string
+        current_view:
+          type: string
+    Occurrence:
+      type: object
+      properties:
+        ulid:
+          type: string
+          format: ulid
+        crash_number:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        device:
+          type: string
+        os:
+          type: string
+        os_version:
+          type: string
+        app_version:
+          type: string
+        memory_mb:
+          type: integer
+        storage_mb:
+          type: integer
+        app_status:
+          type: string
+          enum: [foreground, background]
+        user_id:
+          type: string
+        log_url:
+          type: string
+          format: uri
+    AppHang:
+      type: object
+      properties:
+        number:
+          type: integer
+        title:
+          type: string
+        duration_ms:
+          type: integer
+        first_seen:
+          type: string
+          format: date-time
+        last_seen:
+          type: string
+          format: date-time
+        occurrence_count:
+          type: integer
+        app_version:
+          type: string
+        os_version:
+          type: string
+        device:
+          type: string
+        current_view:
+          type: string
+    Bug:
+      type: object
+      properties:
+        number:
+          type: integer
+        title:
+          type: string
+        reported_at:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [new, in-progress, closed]
+        priority:
+          type: string
+          enum: [trivial, minor, major, critical, blocker]
+        email:
+          type: string
+          format: email
+        app_version:
+          type: string
+        device:
+          type: string
+        user_steps:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              message:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
+        console_log:
+          type: string
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [image, video, file]
+              url:
+                type: string
+                format: uri
+    Review:
+      type: object
+      properties:
+        id:
+          type: string
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        title:
+          type: string
+        body:
+          type: string
+        country:
+          type: string
+        app_version:
+          type: string
+        device:
+          type: string
+        os:
+          type: string
+          enum: [ios, android]
+        prompt_type:
+          type: string
+          enum: [store, native, custom]
+        submitted_at:
+          type: string
+          format: date-time
