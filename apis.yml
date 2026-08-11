@@ -320,6 +320,10 @@ apis:
     url: >-
       https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
 common:
+  - type: IssueTracker
+    url: https://github.com/Instabug/Instabug-iOS/issues
+  - type: Releases
+    url: https://github.com/Instabug/Instabug-iOS/releases
   - type: AgenticAccess
     url: agentic-access/instabug-agentic-access.yml
   - type: DomainSecurity
