@@ -5,14 +5,14 @@
       "source": "https://luciq.ai/blog/rss.xml",
       "feed_url": "https://luciq.ai/blog/rss.xml",
       "title": "",
-      "saved": 0,
+      "saved": 2,
       "method": "feed"
     },
     {
       "source": "https://docs.luciq.ai/changelog/rss.xml",
       "feed_url": "https://docs.luciq.ai/changelog/rss.xml",
       "title": "",
-      "saved": 0,
+      "saved": 4,
       "method": "feed"
     },
     {
@@ -23,6 +23,6 @@
       "method": "discovered"
     }
   ],
-  "post_count": 64,
-  "fetched": "2026-08-06T14:08:46Z"
+  "post_count": 70,
+  "fetched": "2026-08-15T12:11:08Z"
 }
