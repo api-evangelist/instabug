@@ -33,7 +33,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/instabug.png
 created: '2026-05-23'
 modified: '2026-05-23'
-specificationVersion: '0.18'
+specificationVersion: '0.23'
 apis:
 - aid: instabug:export-api
   name: Luciq App Health Metrics Export API
