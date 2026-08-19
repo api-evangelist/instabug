@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Luciq MCP Server App Hangs Bugs API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.luciq.ai/oauth/authorize",
+      "accessTokenUrl": "https://api.luciq.ai/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bugs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bugs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/bugs",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "priority",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "app_version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns user-reported bugs submitted via the Luciq SDK with filtering capabilities. Backs the list_bugs MCP tool."
+        },
+        {
+          "info": {
+            "name": "Get Bug Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/bugs/:number",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "path",
+                "description": "The crash or bug number within the application's mode scope."
+              }
+            ]
+          },
+          "docs": "Returns comprehensive bug information including logs, user data, and device metadata for reproduction. Backs the bug_details MCP tool."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

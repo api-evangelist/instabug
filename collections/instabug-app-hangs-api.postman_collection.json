@@ -1,0 +1,266 @@
+{
+  "item": [
+    {
+      "id": "fc061ae8-004f-4233-ac25-a0f85f7a784c",
+      "name": "App Hangs",
+      "description": {
+        "content": "Inspect grouped UI freeze (hang) events for a Luciq application, filterable by date, status, app version, device, OS, and current view.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e8969d29-b171-4b53-a0d3-88508768c9b4",
+          "name": "List App Hangs",
+          "request": {
+            "name": "List App Hangs",
+            "description": {
+              "content": "Displays grouped UI freeze events for the application. Backs the list_app_hangs MCP tool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "applications",
+                ":slug",
+                "app-hangs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date_ms",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "app_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "app_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "devices",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "devices",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "os_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "os_versions",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "platform",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "current_views",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "current_views",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) The application slug as exposed by list_applications."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "mode",
+                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "68bbe4da-4973-422f-bd6e-3704e32f7978",
+              "name": "Grouped UI hang events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "applications",
+                    ":slug",
+                    "app-hangs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_ms",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "status_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "app_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "app_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "devices",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "devices",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "os_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "os_versions",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "platform",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "current_views",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "current_views",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) The application slug as exposed by list_applications."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "mode",
+                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hangs\": [\n    {\n      \"number\": 2130,\n      \"title\": \"string\",\n      \"duration_ms\": 9804,\n      \"first_seen\": \"1957-12-03T05:44:14.352Z\",\n      \"last_seen\": \"1992-07-13T11:49:31.208Z\",\n      \"occurrence_count\": 4790,\n      \"app_version\": \"string\",\n      \"os_version\": \"string\",\n      \"device\": \"string\",\n      \"current_view\": \"string\"\n    },\n    {\n      \"number\": 4560,\n      \"title\": \"string\",\n      \"duration_ms\": 3816,\n      \"first_seen\": \"1990-07-09T16:59:51.842Z\",\n      \"last_seen\": \"2010-06-05T01:50:45.418Z\",\n      \"occurrence_count\": 9335,\n      \"app_version\": \"string\",\n      \"os_version\": \"string\",\n      \"device\": \"string\",\n      \"current_view\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.luciq.ai/api/mcp",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "mcp:read"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.luciq.ai/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.luciq.ai/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e2e2bce2-62c4-4d1c-9d1f-d7e19a47d354",
+    "name": "Luciq MCP Server App Hangs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data — applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews — as agent-callable tools. This OpenAPI document models the underlying read operations the MCP tools route to so they can be discovered, governed, and reused outside of an MCP client. Transport in production is Streamable HTTP over HTTPS (TLS 1.2+); authentication is OAuth 2.0 with Dynamic Client Registration or a personal access token issued from the Luciq dashboard. Available on all Luciq plans with no extra setup.\n\nContact Support:\n Name: Luciq Support\n Email: support@luciq.ai",
+      "type": "text/plain"
+    }
+  }
+}

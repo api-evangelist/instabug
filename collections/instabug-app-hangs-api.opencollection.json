@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Luciq MCP Server App Hangs API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.luciq.ai/oauth/authorize",
+      "accessTokenUrl": "https://api.luciq.ai/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "App Hangs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List App Hangs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.luciq.ai/api/mcp/applications/:slug/app-hangs",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "The application slug as exposed by list_applications."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "path",
+                "description": "The reporting mode for the application (crash, bug, etc.)."
+              },
+              {
+                "name": "date_ms",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "app_versions",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "devices",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "os_versions",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "platform",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "current_views",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Displays grouped UI freeze events for the application. Backs the list_app_hangs MCP tool."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
