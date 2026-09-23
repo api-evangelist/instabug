@@ -1,12 +1,7 @@
 {
   "provider": "instabug",
   "sources": [
-    "instabug-app-hangs-api-openapi.yml",
-    "instabug-applications-api-openapi.yml",
-    "instabug-bugs-api-openapi.yml",
-    "instabug-crashes-api-openapi.yml",
-    "instabug-occurrences-api-openapi.yml",
-    "instabug-reviews-api-openapi.yml"
+    "_original/instabug-mcp-server-openapi.yml"
   ],
   "outputs": [
     "instabug-app-hangs-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "instabug-mcp-server-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "instabug-app-hangs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "instabug-applications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "instabug-bugs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "instabug-crashes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "instabug-occurrences-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "instabug-reviews-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
