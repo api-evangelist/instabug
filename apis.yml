@@ -7,6 +7,17 @@ description: >-
   agents (Detect, Resolve, Release). Public agent-facing surface is the Luciq MCP Server at api.luciq.ai/api/mcp; data
   export, webhooks, and per-platform SDKs (iOS, Android, React Native, Flutter, KMP) round out the API footprint.
 tags:
+  - AI Agents
+  - APM
+  - Application Performance Monitoring
+  - Bug Reporting
+  - Crash Reporting
+  - MCP
+  - Mobile
+  - Mobile Observability
+  - Observability
+  - Session Replay
+tags_raw:
   - Agentic AI
   - APM
   - Application Performance Monitoring
@@ -18,17 +29,23 @@ tags:
   - Observability
   - Session Replay
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - instabug/instabug-android
+    - instabug/instabug-flutter
+    - instabug/instabug-ios
+    - instabug/instabug-react-native
   open_source: unknown
   commercial: true
   callable_host: true
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - openapi
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: paid

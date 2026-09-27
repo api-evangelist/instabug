@@ -164,7 +164,52 @@ paths:
                         count:
                           type: integer
 components:
+  responses:
+    Unauthorized:
+      description: Missing, expired, or invalid OAuth token / personal access token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource does not exist or is not accessible.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    Mode:
+      name: mode
+      in: path
+      required: true
+      description: The reporting mode for the application (crash, bug, etc.).
+      schema:
+        type: string
+    Number:
+      name: number
+      in: path
+      required: true
+      description: The crash or bug number within the application's mode scope.
+      schema:
+        type: integer
+    Slug:
+      name: slug
+      in: path
+      required: true
+      description: The application slug as exposed by list_applications.
+      schema:
+        type: string
   schemas:
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     Crash:
       type: object
       properties:
@@ -201,51 +246,6 @@ components:
           type: string
         current_view:
           type: string
-    Error:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-  parameters:
-    Slug:
-      name: slug
-      in: path
-      required: true
-      description: The application slug as exposed by list_applications.
-      schema:
-        type: string
-    Mode:
-      name: mode
-      in: path
-      required: true
-      description: The reporting mode for the application (crash, bug, etc.).
-      schema:
-        type: string
-    Number:
-      name: number
-      in: path
-      required: true
-      description: The crash or bug number within the application's mode scope.
-      schema:
-        type: integer
-  responses:
-    NotFound:
-      description: The requested resource does not exist or is not accessible.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing, expired, or invalid OAuth token / personal access token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2
