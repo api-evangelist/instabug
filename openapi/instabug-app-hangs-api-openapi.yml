@@ -93,6 +93,21 @@ paths:
                     items:
                       $ref: '#/components/schemas/AppHang'
 components:
+  parameters:
+    Mode:
+      name: mode
+      in: path
+      required: true
+      description: The reporting mode for the application (crash, bug, etc.).
+      schema:
+        type: string
+    Slug:
+      name: slug
+      in: path
+      required: true
+      description: The application slug as exposed by list_applications.
+      schema:
+        type: string
   schemas:
     AppHang:
       type: object
@@ -119,21 +134,6 @@ components:
           type: string
         current_view:
           type: string
-  parameters:
-    Mode:
-      name: mode
-      in: path
-      required: true
-      description: The reporting mode for the application (crash, bug, etc.).
-      schema:
-        type: string
-    Slug:
-      name: slug
-      in: path
-      required: true
-      description: The application slug as exposed by list_applications.
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       type: oauth2
