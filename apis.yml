@@ -6,6 +6,9 @@ description: >-
   reporting, application performance monitoring, session replay, surveys, feature flags, rollout management, and AI
   agents (Detect, Resolve, Release). Public agent-facing surface is the Luciq MCP Server at api.luciq.ai/api/mcp; data
   export, webhooks, and per-platform SDKs (iOS, Android, React Native, Flutter, KMP) round out the API footprint.
+x-docs-platform: gitbook
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
   - AI Agents
   - APM
@@ -358,6 +361,9 @@ apis:
     url: >-
       https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
 common:
+  - type: CapabilityMap
+    url: capabilities/instabug-capability-edges.yml
+    name: Instabug (Luciq) Business Capability Map
   - type: Website
     url: https://www.luciq.ai/
   - type: IssueTracker
