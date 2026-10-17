@@ -89,21 +89,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: The requested resource does not exist or is not accessible.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
-    Mode:
-      name: mode
-      in: path
-      required: true
-      description: The reporting mode for the application (crash, bug, etc.).
-      schema:
-        type: string
     Slug:
       name: slug
       in: path
@@ -118,6 +104,13 @@ components:
       description: The crash or bug number within the application's mode scope.
       schema:
         type: integer
+    Mode:
+      name: mode
+      in: path
+      required: true
+      description: The reporting mode for the application (crash, bug, etc.).
+      schema:
+        type: string
   schemas:
     Bug:
       type: object
@@ -188,6 +181,13 @@ components:
           type: string
         message:
           type: string
+  responses:
+    NotFound:
+      description: The requested resource does not exist or is not accessible.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

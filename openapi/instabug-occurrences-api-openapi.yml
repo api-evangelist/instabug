@@ -156,18 +156,18 @@ components:
       description: The crash or bug number within the application's mode scope.
       schema:
         type: integer
-    Mode:
-      name: mode
-      in: path
-      required: true
-      description: The reporting mode for the application (crash, bug, etc.).
-      schema:
-        type: string
     Slug:
       name: slug
       in: path
       required: true
       description: The application slug as exposed by list_applications.
+      schema:
+        type: string
+    Mode:
+      name: mode
+      in: path
+      required: true
+      description: The reporting mode for the application (crash, bug, etc.).
       schema:
         type: string
   securitySchemes:

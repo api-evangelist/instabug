@@ -164,6 +164,28 @@ paths:
                         count:
                           type: integer
 components:
+  parameters:
+    Slug:
+      name: slug
+      in: path
+      required: true
+      description: The application slug as exposed by list_applications.
+      schema:
+        type: string
+    Number:
+      name: number
+      in: path
+      required: true
+      description: The crash or bug number within the application's mode scope.
+      schema:
+        type: integer
+    Mode:
+      name: mode
+      in: path
+      required: true
+      description: The reporting mode for the application (crash, bug, etc.).
+      schema:
+        type: string
   responses:
     Unauthorized:
       description: Missing, expired, or invalid OAuth token / personal access token.
@@ -177,28 +199,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    Mode:
-      name: mode
-      in: path
-      required: true
-      description: The reporting mode for the application (crash, bug, etc.).
-      schema:
-        type: string
-    Number:
-      name: number
-      in: path
-      required: true
-      description: The crash or bug number within the application's mode scope.
-      schema:
-        type: integer
-    Slug:
-      name: slug
-      in: path
-      required: true
-      description: The application slug as exposed by list_applications.
-      schema:
-        type: string
   schemas:
     Crash:
       type: object
