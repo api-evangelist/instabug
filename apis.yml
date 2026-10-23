@@ -361,6 +361,8 @@ apis:
     url: >-
       https://docs.luciq.ai/product-guides-and-integrations/product-guides/ai-features/luciq-mcp-server/mcp-tools-reference
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/instabug-luciq/overview
   - type: CapabilityMap
     url: capabilities/instabug-capability-edges.yml
     name: Instabug (Luciq) Business Capability Map
