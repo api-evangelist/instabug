@@ -1,74 +1,88 @@
 {
+  "info": {
+    "_postman_id": "30090f62-eeb8-4673-96a6-ad8674c573b0",
+    "name": "Luciq MCP Server Applications API",
+    "description": "The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data \u2014 applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews \u2014 as agent-callable tools.\n\nContact Support:\n Name: Luciq Support\n Email: support@luciq.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:01:45.000Z",
+    "updatedAt": "2026-10-21T21:01:46.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-30090f62-eeb8-4673-96a6-ad8674c573b0"
+  },
   "item": [
     {
-      "id": "6c954a3e-6b4d-40ac-b4dd-37196b14d73b",
-      "name": "Applications",
-      "description": {
-        "content": "Enumerate the mobile applications accessible to the authenticated account. Applications are the root scoping primitive for every other MCP tool in this surface.",
-        "type": "text/plain"
-      },
+      "name": "applications",
       "item": [
         {
-          "id": "f51a966b-4b1e-4af2-b507-9208885c56dc",
           "name": "List Applications",
+          "id": "93def0ca-37a7-4b43-9bb8-9cab1b7ae4cc",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "List Applications",
-            "description": {
-              "content": "Returns all applications accessible to the authenticated account. Backs the list_applications MCP tool.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "applications"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "platform",
-                  "value": "<string>",
-                  "description": "Filter applications by mobile platform."
-                },
-                {
-                  "disabled": false,
-                  "key": "limit",
-                  "value": "50"
-                },
-                {
-                  "disabled": false,
-                  "key": "offset",
-                  "value": "0"
-                }
-              ],
-              "variable": []
-            },
+            "method": "GET",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
+            "url": {
+              "raw": "{{baseUrl}}/applications?platform=ios&limit=50&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "applications"
+              ],
+              "query": [
+                {
+                  "description": "Filter applications by mobile platform.",
+                  "key": "platform",
+                  "value": "ios"
+                },
+                {
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Returns all applications accessible to the authenticated account. Backs the list_applications MCP tool."
           },
           "response": [
             {
-              "id": "39bda477-8f60-476a-bd5d-306a3f01502c",
+              "id": "93ee1dee-3286-4688-8921-f31f3b9e7722",
               "name": "A page of applications.",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "applications"
-                  ],
+                  "raw": "{{baseUrl}}/applications?platform=ios&limit=50&offset=0",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "applications"
+                  ],
                   "query": [
                     {
+                      "description": "Filter applications by mobile platform.",
                       "key": "platform",
-                      "value": "<string>"
+                      "value": "ios"
                     },
                     {
                       "key": "limit",
@@ -78,53 +92,54 @@
                       "key": "offset",
                       "value": "0"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"applications\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"platform\": \"android\",\n      \"token\": \"string\"\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"platform\": \"flutter\",\n      \"token\": \"string\"\n    }\n  ],\n  \"total\": 6654\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"applications\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"platform\": \"flutter\",\n      \"token\": \"<string>\"\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"platform\": \"react_native\",\n      \"token\": \"<string>\"\n    }\n  ],\n  \"total\": \"<integer>\"\n}",
+              "createdAt": "2026-10-21T21:01:46.000Z",
+              "updatedAt": "2026-10-21T21:01:46.000Z",
+              "uid": "35240-93ee1dee-3286-4688-8921-f31f3b9e7722"
             },
             {
-              "id": "70f62b29-da55-46fc-85e8-42d379092284",
+              "id": "809666db-947d-4cb4-9243-f9877b18a9c8",
               "name": "Missing, expired, or invalid OAuth token / personal access token.",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "applications"
-                  ],
+                  "raw": "{{baseUrl}}/applications?platform=ios&limit=50&offset=0",
                   "host": [
                     "{{baseUrl}}"
                   ],
+                  "path": [
+                    "applications"
+                  ],
                   "query": [
                     {
+                      "description": "Filter applications by mobile platform.",
                       "key": "platform",
-                      "value": "<string>"
+                      "value": "ios"
                     },
                     {
                       "key": "limit",
@@ -134,54 +149,35 @@
                       "key": "offset",
                       "value": "0"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T21:01:46.000Z",
+              "updatedAt": "2026-10-21T21:01:46.000Z",
+              "uid": "35240-809666db-947d-4cb4-9243-f9877b18a9c8"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-21T21:01:46.000Z",
+          "updatedAt": "2026-10-21T21:01:46.000Z",
+          "uid": "35240-93def0ca-37a7-4b43-9bb8-9cab1b7ae4cc"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.luciq.ai/api/mcp",
-      "key": "baseUrl"
+      "id": "e6c5fda0-641f-402c-aafa-a5ac9e93c38c",
+      "createdAt": "2026-10-21T21:01:46.000Z",
+      "updatedAt": "2026-10-21T21:01:46.000Z",
+      "uid": "35240-e6c5fda0-641f-402c-aafa-a5ac9e93c38c"
     }
   ],
   "auth": {
@@ -189,29 +185,30 @@
     "oauth2": [
       {
         "key": "scope",
-        "value": "mcp:read"
+        "value": "mcp:read",
+        "type": "string"
       },
       {
         "key": "accessTokenUrl",
-        "value": "https://api.luciq.ai/oauth/token"
+        "value": "https://api.luciq.ai/oauth/token",
+        "type": "string"
       },
       {
         "key": "authUrl",
-        "value": "https://api.luciq.ai/oauth/authorize"
+        "value": "https://api.luciq.ai/oauth/authorize",
+        "type": "string"
       },
       {
         "key": "grant_type",
-        "value": "authorization_code"
+        "value": "authorization_code",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "b69e444a-5cf9-49d6-9434-bde4f56e2d39",
-    "name": "Luciq MCP Server App Hangs Applications API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data — applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews — as agent-callable tools. This OpenAPI document models the underlying read operations the MCP tools route to so they can be discovered, governed, and reused outside of an MCP client. Transport in production is Streamable HTTP over HTTPS (TLS 1.2+); authentication is OAuth 2.0 with Dynamic Client Registration or a personal access token issued from the Luciq dashboard. Available on all Luciq plans with no extra setup.\n\nContact Support:\n Name: Luciq Support\n Email: support@luciq.ai",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.luciq.ai/api/mcp"
     }
-  }
+  ]
 }

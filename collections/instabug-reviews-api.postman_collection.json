@@ -1,0 +1,230 @@
+{
+  "info": {
+    "_postman_id": "aa5cafc2-9acc-4e33-9eea-8b75d979e1e4",
+    "name": "Luciq MCP Server Reviews API",
+    "description": "The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data \u2014 applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews \u2014 as agent-callable tools.\n\nContact Support:\n Name: Luciq Support\n Email: support@luciq.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:02:11.000Z",
+    "updatedAt": "2026-10-21T21:02:11.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-aa5cafc2-9acc-4e33-9eea-8b75d979e1e4"
+  },
+  "item": [
+    {
+      "name": "applications",
+      "item": [
+        {
+          "name": "{application_token}",
+          "item": [
+            {
+              "name": "reviews",
+              "item": [
+                {
+                  "name": "List Reviews",
+                  "id": "fe75d74c-fc2a-4e03-ac53-64fc1f0a4d6d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/:application_token/reviews?date_ms.gte=<long>&date_ms.lte=<long>&app_version=<string>&rating=<integer>&country=<string>&device=<string>&prompt_type=native&os=ios",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        ":application_token",
+                        "reviews"
+                      ],
+                      "query": [
+                        {
+                          "key": "date_ms.gte",
+                          "value": "<long>"
+                        },
+                        {
+                          "key": "date_ms.lte",
+                          "value": "<long>"
+                        },
+                        {
+                          "key": "app_version",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "rating",
+                          "value": "<integer>"
+                        },
+                        {
+                          "key": "country",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "device",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "prompt_type",
+                          "value": "native"
+                        },
+                        {
+                          "key": "os",
+                          "value": "ios"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "5cd37689-526d-477f-8d11-3d9d6b285313",
+                          "key": "application_token",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Lists app reviews from store, native, and custom prompts with filters for rating, version, country, etc. Backs the list_reviews MCP tool."
+                  },
+                  "response": [
+                    {
+                      "id": "d48ff810-e4ff-4d68-b1ed-6812675b3afb",
+                      "name": "A page of reviews.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:application_token/reviews?date_ms.gte=<long>&date_ms.lte=<long>&app_version=<string>&rating=<integer>&country=<string>&device=<string>&prompt_type=native&os=ios",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":application_token",
+                            "reviews"
+                          ],
+                          "query": [
+                            {
+                              "key": "date_ms.gte",
+                              "value": "<long>"
+                            },
+                            {
+                              "key": "date_ms.lte",
+                              "value": "<long>"
+                            },
+                            {
+                              "key": "app_version",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "rating",
+                              "value": "<integer>"
+                            },
+                            {
+                              "key": "country",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "device",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "prompt_type",
+                              "value": "native"
+                            },
+                            {
+                              "key": "os",
+                              "value": "ios"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "application_token"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"reviews\": [\n    {\n      \"id\": \"<string>\",\n      \"rating\": \"<integer>\",\n      \"title\": \"<string>\",\n      \"body\": \"<string>\",\n      \"country\": \"<string>\",\n      \"app_version\": \"<string>\",\n      \"device\": \"<string>\",\n      \"os\": \"ios\",\n      \"prompt_type\": \"store\",\n      \"submitted_at\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"rating\": \"<integer>\",\n      \"title\": \"<string>\",\n      \"body\": \"<string>\",\n      \"country\": \"<string>\",\n      \"app_version\": \"<string>\",\n      \"device\": \"<string>\",\n      \"os\": \"android\",\n      \"prompt_type\": \"native\",\n      \"submitted_at\": \"<dateTime>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-10-21T21:02:11.000Z",
+                      "updatedAt": "2026-10-21T21:02:11.000Z",
+                      "uid": "35240-d48ff810-e4ff-4d68-b1ed-6812675b3afb"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:02:11.000Z",
+                  "updatedAt": "2026-10-21T21:02:11.000Z",
+                  "uid": "35240-fe75d74c-fc2a-4e03-ac53-64fc1f0a4d6d"
+                }
+              ],
+              "id": "f5cfd58d-5330-4209-9879-fc8a3b8326aa",
+              "createdAt": "2026-10-21T21:02:11.000Z",
+              "updatedAt": "2026-10-21T21:02:11.000Z",
+              "uid": "35240-f5cfd58d-5330-4209-9879-fc8a3b8326aa"
+            }
+          ],
+          "id": "c77133b2-27b8-4220-8b52-920e03b1621f",
+          "createdAt": "2026-10-21T21:02:11.000Z",
+          "updatedAt": "2026-10-21T21:02:11.000Z",
+          "uid": "35240-c77133b2-27b8-4220-8b52-920e03b1621f"
+        }
+      ],
+      "id": "78e89ddd-6b60-4ee9-ac31-4e22e2b66e8d",
+      "createdAt": "2026-10-21T21:02:11.000Z",
+      "updatedAt": "2026-10-21T21:02:11.000Z",
+      "uid": "35240-78e89ddd-6b60-4ee9-ac31-4e22e2b66e8d"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "mcp:read",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.luciq.ai/oauth/token",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.luciq.ai/oauth/authorize",
+        "type": "string"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.luciq.ai/api/mcp"
+    }
+  ]
+}

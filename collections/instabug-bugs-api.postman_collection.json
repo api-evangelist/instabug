@@ -1,360 +1,334 @@
 {
+  "info": {
+    "_postman_id": "82285d93-18be-4468-a5ad-ded91590d8e3",
+    "name": "Luciq MCP Server Bugs API",
+    "description": "The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data \u2014 applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews \u2014 as agent-callable tools.\n\nContact Support:\n Name: Luciq Support\n Email: support@luciq.ai",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:01:53.000Z",
+    "updatedAt": "2026-10-21T21:01:53.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-82285d93-18be-4468-a5ad-ded91590d8e3"
+  },
   "item": [
     {
-      "id": "2630455b-3e48-4193-a0dd-9af35c52aa97",
-      "name": "Bugs",
-      "description": {
-        "content": "Read user-reported bugs submitted via the Luciq SDK report flow, filterable by status, priority, and app version, with full detail including logs, user data, and device metadata for reproduction.",
-        "type": "text/plain"
-      },
+      "name": "applications",
       "item": [
         {
-          "id": "4873832c-94ff-4baa-9d02-25dbc23fa744",
-          "name": "List Bugs",
-          "request": {
-            "name": "List Bugs",
-            "description": {
-              "content": "Returns user-reported bugs submitted via the Luciq SDK with filtering capabilities. Backs the list_bugs MCP tool.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "applications",
-                ":slug",
-                "bugs"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "status",
-                  "value": "<string>"
-                },
-                {
-                  "disabled": false,
-                  "key": "priority",
-                  "value": "<string>"
-                },
-                {
-                  "disabled": false,
-                  "key": "app_version",
-                  "value": "<string>"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "slug",
-                  "description": "(Required) The application slug as exposed by list_applications."
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "mode",
-                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "{slug}",
+          "item": [
             {
-              "id": "58dc0480-1f84-46d8-a828-7ff7e4d9e625",
-              "name": "A page of user-reported bugs.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "applications",
-                    ":slug",
-                    "bugs"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "status",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "priority",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "app_version",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "slug",
-                      "description": "(Required) The application slug as exposed by list_applications."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "mode",
-                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "bugs",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "{number}",
+                  "item": [
+                    {
+                      "name": "Get Bug Details",
+                      "id": "e0f7e377-e505-4c83-94da-4aaee0ecd7c9",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:slug/bugs/:number",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":slug",
+                            "bugs",
+                            ":number"
+                          ],
+                          "variable": [
+                            {
+                              "id": "c2f254bc-eb6f-40bc-8e0a-28de1c2040fa",
+                              "key": "slug",
+                              "value": "<string>",
+                              "description": "(Required) The application slug as exposed by list_applications."
+                            },
+                            {
+                              "id": "50e402d5-353e-496f-b510-957e94ab7553",
+                              "key": "number",
+                              "value": "<integer>",
+                              "description": "(Required) The crash or bug number within the application's mode scope."
+                            },
+                            {
+                              "id": "68e1a665-22ef-4ae6-937e-3ffd4e0d7277",
+                              "key": "mode",
+                              "value": "<string>",
+                              "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                            }
+                          ]
+                        },
+                        "description": "Returns comprehensive bug information including logs, user data, and device metadata for reproduction. Backs the bug_details MCP tool."
+                      },
+                      "response": [
+                        {
+                          "id": "6ae115cd-58d0-49bb-a4bd-02d990ae77dd",
+                          "name": "Full bug record.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:slug/bugs/:number",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":slug",
+                                "bugs",
+                                ":number"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "slug"
+                                },
+                                {
+                                  "key": "number"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"number\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"reported_at\": \"<dateTime>\",\n  \"status\": \"in-progress\",\n  \"priority\": \"major\",\n  \"email\": \"<email>\",\n  \"app_version\": \"<string>\",\n  \"device\": \"<string>\",\n  \"user_steps\": [\n    {\n      \"type\": \"<string>\",\n      \"message\": \"<string>\",\n      \"timestamp\": \"<dateTime>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"message\": \"<string>\",\n      \"timestamp\": \"<dateTime>\"\n    }\n  ],\n  \"console_log\": \"<string>\",\n  \"attachments\": [\n    {\n      \"type\": \"video\",\n      \"url\": \"<uri>\"\n    },\n    {\n      \"type\": \"video\",\n      \"url\": \"<uri>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-10-21T21:01:53.000Z",
+                          "updatedAt": "2026-10-21T21:01:53.000Z",
+                          "uid": "35240-6ae115cd-58d0-49bb-a4bd-02d990ae77dd"
+                        },
+                        {
+                          "id": "0482fbff-d3b3-4ceb-8504-7a72fac6a03c",
+                          "name": "The requested resource does not exist or is not accessible.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: oauth2",
+                                "key": "Authorization",
+                                "value": "<token>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/applications/:slug/bugs/:number",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "applications",
+                                ":slug",
+                                "bugs",
+                                ":number"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "slug"
+                                },
+                                {
+                                  "key": "number"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-10-21T21:01:53.000Z",
+                          "updatedAt": "2026-10-21T21:01:53.000Z",
+                          "uid": "35240-0482fbff-d3b3-4ceb-8504-7a72fac6a03c"
+                        }
+                      ],
+                      "createdAt": "2026-10-21T21:01:53.000Z",
+                      "updatedAt": "2026-10-21T21:01:53.000Z",
+                      "uid": "35240-e0f7e377-e505-4c83-94da-4aaee0ecd7c9"
+                    }
+                  ],
+                  "id": "3b99fd33-d4ec-40e5-ab00-580db0fb5e45",
+                  "createdAt": "2026-10-21T21:01:53.000Z",
+                  "updatedAt": "2026-10-21T21:01:53.000Z",
+                  "uid": "35240-3b99fd33-d4ec-40e5-ab00-580db0fb5e45"
+                },
+                {
+                  "name": "List Bugs",
+                  "id": "0fa6cde8-8cc5-4e2b-8a88-febf78f00f30",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/applications/:slug/bugs?status=new&priority=blocker&app_version=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "applications",
+                        ":slug",
+                        "bugs"
+                      ],
+                      "query": [
+                        {
+                          "key": "status",
+                          "value": "new"
+                        },
+                        {
+                          "key": "priority",
+                          "value": "blocker"
+                        },
+                        {
+                          "key": "app_version",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "7f06401b-390b-463e-8446-71ba0c08490d",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) The application slug as exposed by list_applications."
+                        },
+                        {
+                          "id": "964bd627-ae69-4cb8-9e39-2a7ce4714ea3",
+                          "key": "mode",
+                          "value": "<string>",
+                          "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
+                        }
+                      ]
+                    },
+                    "description": "Returns user-reported bugs submitted via the Luciq SDK with filtering capabilities. Backs the list_bugs MCP tool."
+                  },
+                  "response": [
+                    {
+                      "id": "79210393-758f-4567-933a-e61ac003ebf4",
+                      "name": "A page of user-reported bugs.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/applications/:slug/bugs?status=new&priority=blocker&app_version=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "applications",
+                            ":slug",
+                            "bugs"
+                          ],
+                          "query": [
+                            {
+                              "key": "status",
+                              "value": "new"
+                            },
+                            {
+                              "key": "priority",
+                              "value": "blocker"
+                            },
+                            {
+                              "key": "app_version",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"bugs\": [\n    {\n      \"number\": \"<integer>\",\n      \"title\": \"<string>\",\n      \"reported_at\": \"<dateTime>\",\n      \"status\": \"closed\",\n      \"priority\": \"blocker\",\n      \"email\": \"<email>\",\n      \"app_version\": \"<string>\",\n      \"device\": \"<string>\",\n      \"user_steps\": [\n        {\n          \"type\": \"<string>\",\n          \"message\": \"<string>\",\n          \"timestamp\": \"<dateTime>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"message\": \"<string>\",\n          \"timestamp\": \"<dateTime>\"\n        }\n      ],\n      \"console_log\": \"<string>\",\n      \"attachments\": [\n        {\n          \"type\": \"file\",\n          \"url\": \"<uri>\"\n        },\n        {\n          \"type\": \"video\",\n          \"url\": \"<uri>\"\n        }\n      ]\n    },\n    {\n      \"number\": \"<integer>\",\n      \"title\": \"<string>\",\n      \"reported_at\": \"<dateTime>\",\n      \"status\": \"closed\",\n      \"priority\": \"major\",\n      \"email\": \"<email>\",\n      \"app_version\": \"<string>\",\n      \"device\": \"<string>\",\n      \"user_steps\": [\n        {\n          \"type\": \"<string>\",\n          \"message\": \"<string>\",\n          \"timestamp\": \"<dateTime>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"message\": \"<string>\",\n          \"timestamp\": \"<dateTime>\"\n        }\n      ],\n      \"console_log\": \"<string>\",\n      \"attachments\": [\n        {\n          \"type\": \"video\",\n          \"url\": \"<uri>\"\n        },\n        {\n          \"type\": \"video\",\n          \"url\": \"<uri>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "createdAt": "2026-10-21T21:01:53.000Z",
+                      "updatedAt": "2026-10-21T21:01:53.000Z",
+                      "uid": "35240-79210393-758f-4567-933a-e61ac003ebf4"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:01:53.000Z",
+                  "updatedAt": "2026-10-21T21:01:53.000Z",
+                  "uid": "35240-0fa6cde8-8cc5-4e2b-8a88-febf78f00f30"
                 }
               ],
-              "body": "{\n  \"bugs\": [\n    {\n      \"number\": 228,\n      \"title\": \"string\",\n      \"reported_at\": \"1981-11-06T14:57:14.762Z\",\n      \"status\": \"in-progress\",\n      \"priority\": \"trivial\",\n      \"email\": \"rekWaLCRO@GtMhXsockoEpYQpj.ogbt\",\n      \"app_version\": \"string\",\n      \"device\": \"string\",\n      \"user_steps\": [\n        {\n          \"type\": \"string\",\n          \"message\": \"string\",\n          \"timestamp\": \"2020-10-01T17:04:28.092Z\"\n        },\n        {\n          \"type\": \"string\",\n          \"message\": \"string\",\n          \"timestamp\": \"1967-11-10T04:51:25.348Z\"\n        }\n      ],\n      \"console_log\": \"string\",\n      \"attachments\": [\n        {\n          \"type\": \"video\",\n          \"url\": \"http://GcpqzLnqaUCeozvSOiYnHJslOZDX.ehrUzBfnkPI\"\n        },\n        {\n          \"type\": \"image\",\n          \"url\": \"https://PRT.bpxeskxwzvGnzOTlG,xz9yIkgV27STDRPYO6yzfYVCqBmG9F9TPAM6oWULyq\"\n        }\n      ]\n    },\n    {\n      \"number\": 9636,\n      \"title\": \"string\",\n      \"reported_at\": \"2016-09-05T12:39:44.204Z\",\n      \"status\": \"new\",\n      \"priority\": \"critical\",\n      \"email\": \"DeFuKUkNH@VRjvkRpctzteuAh.zv\",\n      \"app_version\": \"string\",\n      \"device\": \"string\",\n      \"user_steps\": [\n        {\n          \"type\": \"string\",\n          \"message\": \"string\",\n          \"timestamp\": \"1968-10-29T07:09:54.538Z\"\n        },\n        {\n          \"type\": \"string\",\n          \"message\": \"string\",\n          \"timestamp\": \"2017-05-22T07:48:12.921Z\"\n        }\n      ],\n      \"console_log\": \"string\",\n      \"attachments\": [\n        {\n          \"type\": \"video\",\n          \"url\": \"http://YRwrycbnBhKKGLr.uuuojfNHNQQhufMDIgj481cOrR9k-wGbHLy2jWI8GZ0+om3I\"\n        },\n        {\n          \"type\": \"image\",\n          \"url\": \"https://wFJwC.hyteAEI9HOamhf49Wp0a1sggu9FXbnd9c3zX\"\n        }\n      ]\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "08652b3b-b732-443c-949d-6ee0b9ed03b4",
+              "createdAt": "2026-10-21T21:01:53.000Z",
+              "updatedAt": "2026-10-21T21:01:53.000Z",
+              "uid": "35240-08652b3b-b732-443c-949d-6ee0b9ed03b4"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "c3ec244c-5a8f-4307-859a-ebc074e07f9e",
-          "name": "Get Bug Details",
-          "request": {
-            "name": "Get Bug Details",
-            "description": {
-              "content": "Returns comprehensive bug information including logs, user data, and device metadata for reproduction. Backs the bug_details MCP tool.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "applications",
-                ":slug",
-                "bugs",
-                ":number"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "slug",
-                  "description": "(Required) The application slug as exposed by list_applications."
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "mode",
-                  "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "number",
-                  "description": "(Required) The crash or bug number within the application's mode scope."
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "0d0a049e-7a2e-49b7-bad4-b8fddfb69353",
-              "name": "Full bug record.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "applications",
-                    ":slug",
-                    "bugs",
-                    ":number"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "slug",
-                      "description": "(Required) The application slug as exposed by list_applications."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "mode",
-                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "number",
-                      "description": "(Required) The crash or bug number within the application's mode scope."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"number\": 677,\n  \"title\": \"string\",\n  \"reported_at\": \"1964-11-29T04:57:43.212Z\",\n  \"status\": \"in-progress\",\n  \"priority\": \"major\",\n  \"email\": \"gJQSdszPs0mCE@NczbngEIxBEnevvVXRYlBWVxgnkXvJ.igdk\",\n  \"app_version\": \"string\",\n  \"device\": \"string\",\n  \"user_steps\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"timestamp\": \"2013-06-30T23:33:59.206Z\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"timestamp\": \"1975-05-25T23:10:19.455Z\"\n    }\n  ],\n  \"console_log\": \"string\",\n  \"attachments\": [\n    {\n      \"type\": \"video\",\n      \"url\": \"https://JgtPcr.mmzDsGLt.\"\n    },\n    {\n      \"type\": \"file\",\n      \"url\": \"http://yKWokXFQjmwYRqTyEHfEB.gzcLjCSI1bUq\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "3a540be4-5fd1-4e3a-8b53-51b2ddac4289",
-              "name": "The requested resource does not exist or is not accessible.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "applications",
-                    ":slug",
-                    "bugs",
-                    ":number"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "slug",
-                      "description": "(Required) The application slug as exposed by list_applications."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "mode",
-                      "description": "(Required) The reporting mode for the application (crash, bug, etc.)."
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "number",
-                      "description": "(Required) The crash or bug number within the application's mode scope."
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "fcc7b439-7c3a-4979-93ee-29830c54fced",
+          "createdAt": "2026-10-21T21:01:53.000Z",
+          "updatedAt": "2026-10-21T21:01:53.000Z",
+          "uid": "35240-fcc7b439-7c3a-4979-93ee-29830c54fced"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.luciq.ai/api/mcp",
-      "key": "baseUrl"
+      "id": "40dd6c55-f957-44a2-8b7b-27a26fe17ec5",
+      "createdAt": "2026-10-21T21:01:53.000Z",
+      "updatedAt": "2026-10-21T21:01:53.000Z",
+      "uid": "35240-40dd6c55-f957-44a2-8b7b-27a26fe17ec5"
     }
   ],
   "auth": {
@@ -362,29 +336,30 @@
     "oauth2": [
       {
         "key": "scope",
-        "value": "mcp:read"
+        "value": "mcp:read",
+        "type": "string"
       },
       {
         "key": "accessTokenUrl",
-        "value": "https://api.luciq.ai/oauth/token"
+        "value": "https://api.luciq.ai/oauth/token",
+        "type": "string"
       },
       {
         "key": "authUrl",
-        "value": "https://api.luciq.ai/oauth/authorize"
+        "value": "https://api.luciq.ai/oauth/authorize",
+        "type": "string"
       },
       {
         "key": "grant_type",
-        "value": "authorization_code"
+        "value": "authorization_code",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "1e2493ae-6305-4ec1-80eb-a9825a2377b5",
-    "name": "Luciq MCP Server App Hangs Bugs API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "The Luciq MCP Server is a remote Model Context Protocol server hosted at api.luciq.ai/api/mcp that exposes mobile observability data — applications, crashes, crash patterns, occurrences, app hangs, bugs, and store reviews — as agent-callable tools. This OpenAPI document models the underlying read operations the MCP tools route to so they can be discovered, governed, and reused outside of an MCP client. Transport in production is Streamable HTTP over HTTPS (TLS 1.2+); authentication is OAuth 2.0 with Dynamic Client Registration or a personal access token issued from the Luciq dashboard. Available on all Luciq plans with no extra setup.\n\nContact Support:\n Name: Luciq Support\n Email: support@luciq.ai",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.luciq.ai/api/mcp"
     }
-  }
+  ]
 }
